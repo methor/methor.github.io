@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Mathmatics &amp; Programming</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://methor.github.io/"/>
+  <updated>2016-07-16T14:05:40.840Z</updated>
+  <id>https://methor.github.io/</id>
+  
+  <author>
+    <name>N.C.Yi</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>arch</title>
+    <link href="https://methor.github.io/uncategorized/arch/"/>
+    <id>https://methor.github.io/uncategorized/arch/</id>
+    <published>2016-07-16T08:15:00.000Z</published>
+    <updated>2016-07-16T14:05:40.840Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;pacman&quot;&gt;&lt;a href=&quot;#pacman&quot; class=&quot;headerlink&quot; title=&quot;pacman&quot;&gt;&lt;/a&gt;pacman&lt;/h2&gt;&lt;p&gt;pacman有两个配置文件:&lt;code&gt;/etc/pacman.conf&lt;/code&gt;和&lt;code&gt;/etc/pacman.d/mirrorlist&lt;/code&gt;。前者指定根据什么来更新，通常是用后者。mirrorlist文件保存了一系列镜像地址，在进行&lt;code&gt;pacman -Syu&lt;/code&gt;时根据选择的镜像来更新。&lt;/p&gt;
+&lt;h2 id=&quot;图形界面的安装&quot;&gt;&lt;a href=&quot;#图形界面的安装&quot; class=&quot;headerlink&quot; title=&quot;图形界面的安装&quot;&gt;&lt;/a&gt;图形界面的安装&lt;/h2&gt;&lt;p&gt;要使用图形界面，可以安装集成好的桌面环境(DE)如Gnome、KDE等，也可以自由搭配安装桌面环境中的各个组件。最重要的组件是window manager（wm）和display server。display server似乎只有Xorg和Wayland，大部分使用的是Xorg。我现在使用的wm是awesome。&lt;/p&gt;
+&lt;p&gt;安装Xorg&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;pacman -S xorg-server&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;安装awesome&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;pacman -S awesome&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;display manager常常被DE用来启动桌面环境以及管理用户登录，我们自行安装的wm也需要dm，不过也可以直接startx。&lt;/p&gt;
+&lt;p&gt;startx是xinit的前段或包装，主要启动x server和执行DE、WM（每个都是一个client）等等。&lt;code&gt;~/.xserverrc&lt;/code&gt;是startx用来启动x server的脚本。&lt;code&gt;/etc/X11/xinit/xserverrc&lt;/code&gt;是其系统版本。系统版本的图形界面会在一个新的virtual terminal启动，为了限制它在启动它的vt中，需要&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;#!/bin/sh&lt;br&gt;exec /usr/bin/Xorg -nolisten tcp “$@” vt$XDG_VTNR&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;.xinitrc&lt;/code&gt;用来指定xinit启动的client。对应系统版本为&lt;code&gt;/etc/X11/xinit/xinitrc&lt;/code&gt;。要自定义这个文件，首先要copy系统版本再其基础上修改，因为需要执行其他一系列脚本。自定义结果为&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;if [ -d /etc/X11/xinit/xinitrc.d ] ; then&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        [ -x &amp;quot;$f&amp;quot; ] &amp;amp;&amp;amp; . &amp;quot;$f&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    done&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    unset f&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;fi&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# twm &amp;amp;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# xclock -geometry 50x50-1+1 &amp;amp;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# xterm -geometry 80x50+494+51 &amp;amp;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# xterm -geometry 80x20+494-0 &amp;amp;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# exec xterm -geometry 80x66+0+0 -name login&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;## some applications that should be run in the background&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;#xscreensaver &amp;amp;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;#xsetroot -cursor_name left_ptr &amp;amp;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;exec awesome&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;exec语句是最后一句，因为exec会进行进程替换。其他client应该fork或在后台执行。&lt;/p&gt;
+&lt;p&gt;需要注意的是，awesome默认使用的是xterm，arch刚刚安装完是没有xterm的，会出现打开terminal没有反应。安装xterm即可。&lt;/p&gt;
+&lt;p&gt;要启动图形界面，直接startx。awesome有退出选项。&lt;/p&gt;
+&lt;p&gt;要在登录时自动执行X，使用bash在&lt;code&gt;~/.bash_profile&lt;/code&gt;中加入&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[[ -z $DISPLAY &amp;amp;&amp;amp; $XDG_VTNR -le 3 ]] &amp;amp;&amp;amp; exec startx&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这样vt1~vt3都可以自动执行X了。&lt;/p&gt;
+&lt;p&gt;还有在使用中切换DE/WM，暂时没用到。&lt;/p&gt;
+&lt;h2 id=&quot;网络相关&quot;&gt;&lt;a href=&quot;#网络相关&quot; class=&quot;headerlink&quot; title=&quot;网络相关&quot;&gt;&lt;/a&gt;网络相关&lt;/h2&gt;&lt;p&gt;DNS服务器配置文件是&lt;code&gt;/etc/resolv.conf&lt;/code&gt;，host文件是&lt;code&gt;/etc/hosts&lt;/code&gt;，dhcp配置在&lt;code&gt;/etc/dhcpcd.conf&lt;/code&gt;（默认使用duid，如果无法联网可尝试clientid，血的教训/(ㄒoㄒ)/~~）。还有很多在&lt;code&gt;/etc/netctl&lt;/code&gt;中，比如静态ip等等。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;pacman&quot;&gt;&lt;a href=&quot;#pacman&quot; class=&quot;headerlink&quot; title=&quot;pacman&quot;&gt;&lt;/a&gt;pacman&lt;/h2&gt;&lt;p&gt;pacman有两个配置文件:&lt;code&gt;/etc/pacman.conf&lt;/code&gt;和&lt;code&gt;/etc
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Cassandra初探</title>
+    <link href="https://methor.github.io/Distributed-System/Cassandra%E5%88%9D%E6%8E%A2/"/>
+    <id>https://methor.github.io/Distributed-System/Cassandra初探/</id>
+    <published>2016-07-13T03:38:00.000Z</published>
+    <updated>2016-07-15T09:14:43.928Z</updated>
+    
+    <content type="html">&lt;p&gt;Cassandra是一个去中心化的、高可靠性高可扩展性的、高吞吐率的分布式存储系统。它是由Facebook开发，论文发表在&lt;a href=&quot;http://dl.acm.org/citation.cfm?id=1773922&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;paper address&lt;/a&gt;上。这里给出这篇论文中描述的关键概念。&lt;/p&gt;
+&lt;h1 id=&quot;Data-Model&quot;&gt;&lt;a href=&quot;#Data-Model&quot; class=&quot;headerlink&quot; title=&quot;Data Model&quot;&gt;&lt;/a&gt;Data Model&lt;/h1&gt;&lt;p&gt;表是一组索引到一组多维数据的映射，就像传统数据库一样。数据列被组织为&lt;em&gt;column family&lt;/em&gt;，一个column family可以包括多个列，此时存取单列记为&lt;em&gt;column_family : column&lt;/em&gt;。除此之外还有&lt;em&gt;super column family&lt;/em&gt;，一个super column family可以包括多个column family，此时存取单列记为&lt;em&gt;column_family : super_column : column&lt;/em&gt;。&lt;/p&gt;
+&lt;h1 id=&quot;API&quot;&gt;&lt;a href=&quot;#API&quot; class=&quot;headerlink&quot; title=&quot;API&quot;&gt;&lt;/a&gt;API&lt;/h1&gt;&lt;p&gt;三个简单的方法：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;insert(table,key,rowMutation)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;get(table,key,columnName)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;delete(table,key,columnName)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;em&gt;columnName&lt;/em&gt;可以是column family中的column，可以是column family，可以是super column family，可以是super column中的column。&lt;/p&gt;
+&lt;h1 id=&quot;Partitioning&quot;&gt;&lt;a href=&quot;#Partitioning&quot; class=&quot;headerlink&quot; title=&quot;Partitioning&quot;&gt;&lt;/a&gt;Partitioning&lt;/h1&gt;&lt;p&gt;Partitioning就是将数据分布到不同节点的特性。通过将负载高节点的数据转移到低负载节点，可以提高系统的可扩展性。并且Cassandra支持增量式扩展(scale incrementally)。使用的核心技术是&lt;em&gt;consistent hashing&lt;/em&gt;，节点随机分配到标识符环上，key都被hash到一个标识符（和节点的标识符属于同一个标识符空间）。key找到第一个满足标识符大于key的标识符的节点，这个节点是这个key的coordinator。对这个key的请求会被route到这个节点。节点的加入和离开只会影响邻居节点管制的key，容易增量式扩展。基本的&lt;em&gt;consistent hashing&lt;/em&gt;带来两个问题，一个是数据负载可能不均衡(?)，第二个是节点的性能可能存在差异。Cassandra的做法是分析负载信息，移动低负载节点的位置从而降低高负载节点的压力。&lt;/p&gt;
+&lt;h1 id=&quot;Replication&quot;&gt;&lt;a href=&quot;#Replication&quot; class=&quot;headerlink&quot; title=&quot;Replication&quot;&gt;&lt;/a&gt;Replication&lt;/h1&gt;&lt;p&gt;Cassandra使用复制提高可用性和持续性(availability and durability)。可以指定一个复制因子$N$，系统会将数据复制到$N$个不同的节点。Coordinator负责将数据复制到其他$N-1$个节点中。有几种复制策略选择：“Rack Unaware”会复制到coordinator后面的$N-1$个节点；“Rack Aware”和“Datacenter Aware”会利用Zookeeper选择出一个leader，leader指定数据的其他$N-1$replica位置，节点加入时leader告知它负责哪些range，并且leader维护一个不变式使得每个节点不作为超过$N-1$个range的replica。Cassandra借用Dynamo的说法，将负责某个range的那些节点称为range的“preference list”。&lt;/p&gt;
+&lt;p&gt;通过将每行数据复制到不同的data center（推测应该是Datacenter Aware策略的结果），Cassandra提供了持续性（durability）保障。这样即使整个data center failure都可以处理。&lt;/p&gt;
+&lt;h1 id=&quot;Membership&quot;&gt;&lt;a href=&quot;#Membership&quot; class=&quot;headerlink&quot; title=&quot;Membership&quot;&gt;&lt;/a&gt;Membership&lt;/h1&gt;&lt;p&gt;Cluster membership基于Scuttlebutt（我并不了解），Scuttlebutt是一个高效的anti-entropy Gossip based mechanism（并没有详细介绍）。Cassandra中gossip并不仅仅用于membership还被用来分发系统控制状态。&lt;/p&gt;
+&lt;p&gt;Cassandra使用修改版的$\Phi$ Accural Failure Detector来探测节点failure。这个failure detection module为每个节点释放一个$\Phi$值，这个值在一个量表中表征某个含义（含义略）。&lt;/p&gt;
+&lt;h1 id=&quot;Bootstrapping&quot;&gt;&lt;a href=&quot;#Bootstrapping&quot; class=&quot;headerlink&quot; title=&quot;Bootstrapping&quot;&gt;&lt;/a&gt;Bootstrapping&lt;/h1&gt;&lt;p&gt;节点在加入时随机选择一个标识符，这个映射会被存储到硬盘盒Zookeeper上。标识符信息会被gossip给cluster的所有节点，cluster的节点就可以知道标识符环的节点位置。节点bootstrap的加入需要初始contact points，Cassandra称之为seeds，通常由Zookeeper配置。&lt;/p&gt;
+&lt;p&gt;（Facebook相关）Facebook环境中节点会暂时断开但并不意味着永久离开，因此不需要partitioning的重新平衡和unreachable replica的repair。因此节点的加入和离开由人来控制，然而人可能犯错，因此一个Cassandra实例的消息都带有这个实例的名字。当人工操作失误时，操作将被制止。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;Local-Persistence&quot;&gt;&lt;a href=&quot;#Local-Persistence&quot; class=&quot;headerlink&quot; title=&quot;Local Persistence&quot;&gt;&lt;/a&gt;Local Persistence&lt;/h1&gt;&lt;p&gt;涉及到两个存储结构：&lt;em&gt;commit log&lt;/em&gt;以及&lt;em&gt;in-memory data structure&lt;/em&gt;。写操作会触发对commit log和in-memory data structrue的写入。对后者的写入发生在对前者的写入完成后，这样即使发生错误也能从commit log恢复。commit log dump到在每个节点配备的较为昂贵的磁盘中，in-memory data structure dump到在廉价磁盘中。当in-memory data structure超过一定大小会被dump。对commit log和in-memory data structure的写入会产生一个索引便于后续查找。一个后台过程会负责把dump到磁盘的文件合并为一个文件。&lt;/p&gt;
+&lt;p&gt;读操作首先查询in-memory data structure，如果没找到会从最新到最旧查看文件。可能会从多个文件查找某个key，于是Cassandra为了避免对不包括key的文件进行查找，采用了&lt;em&gt;bloom filter&lt;/em&gt;方法。bloom filter存储在文件和内存中，查找文件前会首先查询bloom filter。由于所要求的column可能包含多个column，并且column数据可能在文件中与key距离很远，所以Cassandra维护column索引快速存取column数据。一个key的columns是串行dump到文件中，Facebook每256K创建一个索引。&lt;/p&gt;
+&lt;h1 id=&quot;Implementation-Details&quot;&gt;&lt;a href=&quot;#Implementation-Details&quot; class=&quot;headerlink&quot; title=&quot;Implementation Details&quot;&gt;&lt;/a&gt;Implementation Details&lt;/h1&gt;&lt;p&gt;包含这几个模块：partitioning模块、cluster membership and failure detection模块、storage engine模块。这些模块由事件驱动，下层是消息处理流水线和任务流水线。网络层使用的是非阻塞型io。系统控制消息使用的是UDP，和应用相关的消息（复制、request routing）使用的是TCP。&lt;/p&gt;
+&lt;p&gt;request routing模块是一个状态机：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;找到具有这个key的节点（们）&lt;/li&gt;
+&lt;li&gt;把请求route到节点（们）并等待回应&lt;/li&gt;
+&lt;li&gt;如果在给定timeout内没有回应，向client返回失败&lt;/li&gt;
+&lt;li&gt;根据时间戳确定最新的回应&lt;/li&gt;
+&lt;li&gt;schedule repair数据，即repair没有最新的数据的replica&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;写入操作可以是同步型或者异步型，同步型需要一定数量的replica的回应，异步型则（或许）只需要一个replica的回应。&lt;/p&gt;
+&lt;p&gt;Cassandra的日志系统purge commit log条目。Facebook的做法是老的commit log大小达到128MB时进行rolling out。每个commit log有一个包含了bit vector的header，header的大小是固定的。对于每个column family，都有一个in-memory data structure以及一个文件。每当对应于一个column family的in-memory data structure被dump到磁盘时，设置commit log中对应的bit表明这个column family被写入了磁盘，进而表示这份消息被&lt;em&gt;commit&lt;/em&gt;了。当commit log被roll时，检查它的bit vector和在之前被roll的commit log的bit vector。如果发现所有数据都被写入了磁盘，这些commit logs会被删除。对commit log的写入可以是normal mode也可以是&lt;em&gt;fast sync&lt;/em&gt; mode。在后面的情况中，写入会被缓存。这种方法可能会造成数据丢失（commit log丢失意味着无法根据记录重放原始操作）。在此模式下，dump in-memory data structure的方式也变为缓存。&lt;/p&gt;
+&lt;p&gt;传统数据库的初衷不是为了处理高吞吐率的写入，于是Cassandra将对磁盘的写入变形为串行化写入从而最大化磁盘写入吞吐率（？）。因为写入磁盘的文件不会改变，于是读取他们的时候不用加锁。Cassandra的server实例的读/写操作在实际上（莫非写操作无锁没有理论依据？）都是都是无锁的。&lt;/p&gt;
+&lt;p&gt;磁盘上的数据文件被划分（broke down）为一系列的块。Cassandra根据primary key来索引数据，一个块最多包含128个key，并且由一个block index划出界限（demarcated）。block index记录了一个key在block中的相对偏移量和数据的大小。当in-memory data structure被dump到文件中时，会产生一个block index并且它们（？）的偏移量会被写入到磁盘作为索引。这份索引也会驻留在内存中。（这一段原文的表述似乎有问题）&lt;/p&gt;
+&lt;h1 id=&quot;小结&quot;&gt;&lt;a href=&quot;#小结&quot; class=&quot;headerlink&quot; title=&quot;小结&quot;&gt;&lt;/a&gt;小结&lt;/h1&gt;&lt;p&gt;Cassandra是一个去中心化的、高可靠性高扩展性的、写操作吞吐率高的分布式存储系统。它采用partitioning、replication、membership、failure detection等手段实现这些特性。&lt;/p&gt;
+&lt;p&gt;我的问题有&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;commit log被删除的条件是所有数据存储到了磁盘上。如果in-memory data structure对应的dump文件也丢失了，难道依靠replica特性找回？commit log的删除策略似乎有些问题。&lt;/li&gt;
+&lt;li&gt;文中说读取操作不用加锁，那么为什么说写入也不用加锁？难道是所谓的串行化的原因吗？还有，这些部分是对磁盘文件而言，对于驻留在内存的commit log和in-memory data structure的读取和写入呢？它们是会变的，似乎也不存在串行化这一说。&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Cassandra是一个去中心化的、高可靠性高可扩展性的、高吞吐率的分布式存储系统。它是由Facebook开发，论文发表在&lt;a href=&quot;http://dl.acm.org/citation.cfm?id=1773922&quot;&gt;paper address&lt;/a&gt;上。这里给出这篇论文中描述的关键概念。&lt;/p&gt;
+&lt;h1 id=&quot;Data-Model&quot;&gt;&lt;a href=&quot;#Data-Model&quot; class=&quot;headerlink&quot; title=&quot;Data Model&quot;&gt;&lt;/a&gt;Data Model&lt;/h1&gt;&lt;p&gt;表是一组索引到一组多维数据的映射，就像传统数据库一样。数据列被组织为&lt;em&gt;column family&lt;/em&gt;，一个column family可以包括多个列，此时存取单列记为&lt;em&gt;column_family : column&lt;/em&gt;。除此之外还有&lt;em&gt;super column family&lt;/em&gt;，一个super column family可以包括多个column family，此时存取单列记为&lt;em&gt;column_family : super_column : column&lt;/em&gt;。&lt;/p&gt;
+&lt;h1 id=&quot;API&quot;&gt;&lt;a href=&quot;#API&quot; class=&quot;headerlink&quot; title=&quot;API&quot;&gt;&lt;/a&gt;API&lt;/h1&gt;&lt;p&gt;三个简单的方法：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;insert(table,key,rowMutation)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;get(table,key,columnName)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;delete(table,key,columnName)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这里的&lt;em&gt;columnName&lt;/em&gt;可以是column family中的column，可以是column family，可以是super column family，可以是super column中的column。&lt;/p&gt;
+&lt;h1 id=&quot;Partitioning&quot;&gt;&lt;a href=&quot;#Partitioning&quot; class=&quot;headerlink&quot; title=&quot;Partitioning&quot;&gt;&lt;/a&gt;Partitioning&lt;/h1&gt;&lt;p&gt;Partitioning就是将数据分布到不同节点的特性。通过将负载高节点的数据转移到低负载节点，可以提高系统的可扩展性。并且Cassandra支持增量式扩展(scale incrementally)。使用的核心技术是&lt;em&gt;consistent hashing&lt;/em&gt;，节点随机分配到标识符环上，key都被hash到一个标识符（和节点的标识符属于同一个标识符空间）。key找到第一个满足标识符大于key的标识符的节点，这个节点是这个key的coordinator。对这个key的请求会被route到这个节点。节点的加入和离开只会影响邻居节点管制的key，容易增量式扩展。基本的&lt;em&gt;consistent hashing&lt;/em&gt;带来两个问题，一个是数据负载可能不均衡(?)，第二个是节点的性能可能存在差异。Cassandra的做法是分析负载信息，移动低负载节点的位置从而降低高负载节点的压力。&lt;/p&gt;
+&lt;h1 id=&quot;Replication&quot;&gt;&lt;a href=&quot;#Replication&quot; class=&quot;headerlink&quot; title=&quot;Replication&quot;&gt;&lt;/a&gt;Replication&lt;/h1&gt;&lt;p&gt;Cassandra使用复制提高可用性和持续性(availability and durability)。可以指定一个复制因子$N$，系统会将数据复制到$N$个不同的节点。Coordinator负责将数据复制到其他$N-1$个节点中。有几种复制策略选择：“Rack Unaware”会复制到coordinator后面的$N-1$个节点；“Rack Aware”和“Datacenter Aware”会利用Zookeeper选择出一个leader，leader指定数据的其他$N-1$replica位置，节点加入时leader告知它负责哪些range，并且leader维护一个不变式使得每个节点不作为超过$N-1$个range的replica。Cassandra借用Dynamo的说法，将负责某个range的那些节点称为range的“preference list”。&lt;/p&gt;
+&lt;p&gt;通过将每行数据复制到不同的data center（推测应该是Datacenter Aware策略的结果），Cassandra提供了持续性（durability）保障。这样即使整个data center failure都可以处理。&lt;/p&gt;
+&lt;h1 id=&quot;Membership&quot;&gt;&lt;a href=&quot;#Membership&quot; class=&quot;headerlink&quot; title=&quot;Membership&quot;&gt;&lt;/a&gt;Membership&lt;/h1&gt;&lt;p&gt;Cluster membership基于Scuttlebutt（我并不了解），Scuttlebutt是一个高效的anti-entropy Gossip based mechanism（并没有详细介绍）。Cassandra中gossip并不仅仅用于membership还被用来分发系统控制状态。&lt;/p&gt;
+&lt;p&gt;Cassandra使用修改版的$\Phi$ Accural Failure Detector来探测节点failure。这个failure detection module为每个节点释放一个$\Phi$值，这个值在一个量表中表征某个含义（含义略）。&lt;/p&gt;
+&lt;h1 id=&quot;Bootstrapping&quot;&gt;&lt;a href=&quot;#Bootstrapping&quot; class=&quot;headerlink&quot; title=&quot;Bootstrapping&quot;&gt;&lt;/a&gt;Bootstrapping&lt;/h1&gt;&lt;p&gt;节点在加入时随机选择一个标识符，这个映射会被存储到硬盘盒Zookeeper上。标识符信息会被gossip给cluster的所有节点，cluster的节点就可以知道标识符环的节点位置。节点bootstrap的加入需要初始contact points，Cassandra称之为seeds，通常由Zookeeper配置。&lt;/p&gt;
+&lt;p&gt;（Facebook相关）Facebook环境中节点会暂时断开但并不意味着永久离开，因此不需要partitioning的重新平衡和unreachable replica的repair。因此节点的加入和离开由人来控制，然而人可能犯错，因此一个Cassandra实例的消息都带有这个实例的名字。当人工操作失误时，操作将被制止。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Distributed System" scheme="https://methor.github.io/categories/Distributed-System/"/>
+    
+    
+      <category term="Cassandra" scheme="https://methor.github.io/tags/Cassandra/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TikZ</title>
+    <link href="https://methor.github.io/writing/tikz/"/>
+    <id>https://methor.github.io/writing/tikz/</id>
+    <published>2016-05-25T11:57:00.000Z</published>
+    <updated>2016-07-15T08:44:47.625Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;TikZ是什么&quot;&gt;&lt;a href=&quot;#TikZ是什么&quot; class=&quot;headerlink&quot; title=&quot;TikZ是什么&quot;&gt;&lt;/a&gt;TikZ是什么&lt;/h1&gt;&lt;p&gt;PGF/TikZ是用于绘制几何和代数的向量图形的语言，PGF是底层语言，TikZ则是基于PGF的宏高级语言。PGF/TikZ可以在$\LaTeX$、plain $\TeX$、和\ConTEXt中使用. 这里主要关注TikZ在$\LaTeX$中的用法。&lt;/p&gt;
+&lt;h1 id=&quot;TikZ基础&quot;&gt;&lt;a href=&quot;#TikZ基础&quot; class=&quot;headerlink&quot; title=&quot;TikZ基础&quot;&gt;&lt;/a&gt;TikZ基础&lt;/h1&gt;&lt;h2 id=&quot;设置使用环境&quot;&gt;&lt;a href=&quot;#设置使用环境&quot; class=&quot;headerlink&quot; title=&quot;设置使用环境&quot;&gt;&lt;/a&gt;设置使用环境&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;documentclass&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;article&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;% say&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;usepackage&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikz&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;document&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;We are working on&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; (-1.5,0) -- (1.5,0);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; (0,-1.5) -- (0,1.5);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;.&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;document&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;构造直线&quot;&gt;&lt;a href=&quot;#构造直线&quot; class=&quot;headerlink&quot; title=&quot;构造直线&quot;&gt;&lt;/a&gt;构造直线&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; (-1.5,0) -- (1.5,0) -- (0,-1.5) -- (0,1.5);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;不要忘记表达式尾的分号。&lt;/p&gt;
+&lt;h2 id=&quot;构造长方形&quot;&gt;&lt;a href=&quot;#构造长方形&quot; class=&quot;headerlink&quot; title=&quot;构造长方形&quot;&gt;&lt;/a&gt;构造长方形&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; (-0.5,-0.5) rectangle (-1,-1);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;增加一点风格&quot;&gt;&lt;a href=&quot;#增加一点风格&quot; class=&quot;headerlink&quot; title=&quot;增加一点风格&quot;&gt;&lt;/a&gt;增加一点风格&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;help lines/.style=&amp;#123;color=blue!50,very thin&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果&lt;code&gt;help lines&lt;/code&gt;定义在全局，则在文档开头使用&lt;code&gt;\tikzset&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;tikzset&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;help lines/.style=very thin&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;一个风格的定义可以引用另一个风格。如&lt;code&gt;Karl&amp;#39;s grid&lt;/code&gt;引用了上面的&lt;code&gt;help lines&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;tikzset&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;Karl’s grid/.style=&amp;#123;help lines,color=blue!50&amp;#125;&lt;/span&gt;&lt;/span&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[Karl’s grid]&lt;/span&gt;&lt;/span&gt; (0,0) grid (5,5);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;这也同时提示我们风格的用法类似&lt;strong&gt;\draw&lt;/strong&gt;[&lt;em&gt;style&lt;/em&gt;]。如果定义局部（在环境内部）的风格，则像下面这样&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;[Karl’s grid/.style =&amp;#123;help lines,color=#1!50&amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Karl’s grid/.default=blue]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[Karl’s grid]&lt;/span&gt;&lt;/span&gt; (0,0) grid (1.5,2);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[Karl’s grid=red]&lt;/span&gt;&lt;/span&gt; (2,0) grid (3.5,2);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;定义在&lt;code&gt;tikzpicture&lt;/code&gt;的可选参数中。上面也提示我们可以为风格设置默认值，想要替换默认值只需要给风格赋一个新值。&lt;/p&gt;
+&lt;h2 id=&quot;绘制选项&quot;&gt;&lt;a href=&quot;#绘制选项&quot; class=&quot;headerlink&quot; title=&quot;绘制选项&quot;&gt;&lt;/a&gt;绘制选项&lt;/h2&gt;&lt;p&gt;线条的粗细有以下一些值&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ultra thin, very thin, thin, semithick, thick, very thick, ultra thick&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;thin&lt;/code&gt;是正常粗细，它和$\TeX$的&lt;code&gt;\hrule&lt;/code&gt;的粗细相同。&lt;/p&gt;
+&lt;p&gt;线条的样式有以下一些值&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;loosely dashed, dashed, densely dashed&lt;br&gt;loosely dotted, dotted, densely dotted&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;含义一看便知。&lt;/p&gt;
+&lt;p&gt;若要为线条尾部增加箭头，可以为&lt;strong&gt;\draw&lt;/strong&gt;添加&lt;strong&gt;-&amp;gt;&lt;/strong&gt;选项。若为线条头部增加箭头，改为&lt;strong&gt;&amp;lt;-&lt;/strong&gt;。若首尾均增加箭头，则是&lt;strong&gt;&amp;lt;-&amp;gt;&lt;/strong&gt;。&lt;/p&gt;
+&lt;h1 id=&quot;TikZ中的node&quot;&gt;&lt;a href=&quot;#TikZ中的node&quot; class=&quot;headerlink&quot; title=&quot;TikZ中的node&quot;&gt;&lt;/a&gt;TikZ中的node&lt;/h1&gt;&lt;p&gt;TikZ中的&lt;code&gt;node&lt;/code&gt;可以插入文字标签，更重要的是可以方便地构造几何图形。转换图、流程图等等都可以用&lt;code&gt;node&lt;/code&gt;实现。&lt;/p&gt;
+&lt;h2 id=&quot;node和at&quot;&gt;&lt;a href=&quot;#node和at&quot; class=&quot;headerlink&quot; title=&quot;\node和at&quot;&gt;&lt;/a&gt;\node和at&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at ( 0,2) [circle,draw] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at ( 0,1) [circle,draw] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at ( 0,0) [circle,draw] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at ( 1,1) [rectangle,draw] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at (-1,1) [rectangle,draw] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这种写法使用了&lt;code&gt;\node&lt;/code&gt;命令和&lt;code&gt;at&lt;/code&gt;标记，简化了原始写法。行尾的&lt;code&gt;{}&lt;/code&gt;用于插入文字，为空表示不插入任何文字。可选参数中，&lt;code&gt;circle&lt;/code&gt;给出了环绕文字（尽管为空）的形状，&lt;code&gt;draw&lt;/code&gt;选项引起绘制环绕形状的动作。&lt;/p&gt;
+&lt;p&gt;事实上，&lt;code&gt;\node&lt;/code&gt;命令是&lt;code&gt;\path node&lt;/code&gt;的简写。更原始的版本是这样&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;path&lt;/span&gt;&lt;/span&gt; node at ( 0,2) [shape=circle,draw] &amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	  node at ( 0,1) [shape=circle,draw] &amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	  node at ( 0,0) [shape=circle,draw] &amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	  node at ( 1,1) [shape=rectangle,draw] &amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	  node at (-1,1) [shape=rectangle,draw] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;最原始的版本没有使用&lt;code&gt;at&lt;/code&gt;标记，含义并不直观，所以不再列出。&lt;/p&gt;
+&lt;h2 id=&quot;node的尺寸&quot;&gt;&lt;a href=&quot;#node的尺寸&quot; class=&quot;headerlink&quot; title=&quot;node的尺寸&quot;&gt;&lt;/a&gt;node的尺寸&lt;/h2&gt;&lt;p&gt;上面绘制出的node尺寸非常小，因为我们没有设定尺寸参数。node默认使用&lt;code&gt;inner sep&lt;/code&gt;的值自动为node中的文字增加环绕空白，而默认的&lt;code&gt;inner sep&lt;/code&gt;是很小的。可以手动修改&lt;code&gt;inner sep&lt;/code&gt;的值&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;[inner sep=2mm,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;place/.style=&amp;#123;circle,draw=blue!50,fill=blue!20,thick&amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;transition/.style=&amp;#123;rectangle,draw=black!50,fill=black!20,thick&amp;#125;]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at ( 0,2) [place] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at ( 0,1) [place] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at ( 0,0) [place] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at ( 1,1) [transition] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; at (-1,1) [transition] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;但是更好的做法是使用&lt;code&gt;minimum size&lt;/code&gt;选项。它指定了node的&lt;em&gt;最小&lt;/em&gt;尺寸：无论内部文字多么小（甚至没有），node都能达到这一最小尺寸。同时将&lt;code&gt;inner sep&lt;/code&gt;设为&lt;code&gt;0pt&lt;/code&gt;，这样能在&lt;code&gt;minimum size&lt;/code&gt;较小的时候不至于错误地包含&lt;code&gt;inner sep&lt;/code&gt;增加的空间。&lt;/p&gt;
+&lt;h2 id=&quot;node命名&quot;&gt;&lt;a href=&quot;#node命名&quot; class=&quot;headerlink&quot; title=&quot;node命名&quot;&gt;&lt;/a&gt;node命名&lt;/h2&gt;&lt;p&gt;为了后续引用定义好的node（比如在node间绘制连接线），可以为node命名，以后用名字引用node。方便的做法是将名字放置在圆括号内部&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;% ... set up styles&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; (waiting 1) at ( 0,2) [place] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; (critical 1) at ( 0,1) [place] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; (semaphore) at ( 0,0) [place] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; (leave critical) at ( 1,1) [transition] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; (enter critical) at (-1,1) [transition] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;node的语法很宽松，名字、at标识符、可选参数的顺序不做要求。&lt;/p&gt;
+&lt;h2 id=&quot;使用相对位置&quot;&gt;&lt;a href=&quot;#使用相对位置&quot; class=&quot;headerlink&quot; title=&quot;使用相对位置&quot;&gt;&lt;/a&gt;使用相对位置&lt;/h2&gt;&lt;p&gt;&lt;em&gt;fixed positioning&lt;/em&gt;弊端很大，不直观而且不灵活，&lt;em&gt;relative positioning&lt;/em&gt;使用起来更方便。在TikZ中使用相对位置需要载入&lt;code&gt;positioning&lt;/code&gt;库。于是使用相对位置改写上面的例子&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[place]&lt;/span&gt;&lt;/span&gt; (waiting) &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[place]&lt;/span&gt;&lt;/span&gt; (critical) [below=of waiting] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[place]&lt;/span&gt;&lt;/span&gt; (semaphore) [below=of critical] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[transition]&lt;/span&gt;&lt;/span&gt; (leave critical) [right=of critical] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[transition]&lt;/span&gt;&lt;/span&gt; (enter critical) [left=of critical] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;当类似&lt;code&gt;below&lt;/code&gt;的选项后面紧跟&lt;code&gt;of&lt;/code&gt;，TikZ就会启用相对位置。&lt;strong&gt;相对距离&lt;/strong&gt;则使用&lt;code&gt;node distance&lt;/code&gt;选项。&lt;/p&gt;
+&lt;h2 id=&quot;为node增加文字标签&quot;&gt;&lt;a href=&quot;#为node增加文字标签&quot; class=&quot;headerlink&quot; title=&quot;为node增加文字标签&quot;&gt;&lt;/a&gt;为node增加文字标签&lt;/h2&gt;&lt;p&gt;想要在node周围增加文字标签，有两种方法&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;直接使用node，利用node的&lt;code&gt;anchor&lt;/code&gt;属性&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[place]&lt;/span&gt;&lt;/span&gt; (waiting) &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[place]&lt;/span&gt;&lt;/span&gt; (critical) [below=of waiting] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[place]&lt;/span&gt;&lt;/span&gt; (semaphore) [below=of critical] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[transition]&lt;/span&gt;&lt;/span&gt; (leave critical) [right=of critical] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[transition]&lt;/span&gt;&lt;/span&gt; (enter critical) [left=of critical] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; [red,above] at (semaphore.north) &amp;#123;&lt;span class=&quot;formula&quot;&gt;$s&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;le&lt;/span&gt;&lt;/span&gt; 3$&lt;/span&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用&lt;code&gt;label&lt;/code&gt;选项&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;tikz&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;/span&gt; [circle,draw,label=60:&lt;span class=&quot;formula&quot;&gt;$60^&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;circ&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;,label=below:&lt;span class=&quot;formula&quot;&gt;$-90^&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;circ&lt;/span&gt;&lt;/span&gt;$&lt;/span&gt;] &amp;#123;my circle&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;像上面这样，可以增加多个标签。&lt;/p&gt;
+&lt;h2 id=&quot;node连接线&quot;&gt;&lt;a href=&quot;#node连接线&quot; class=&quot;headerlink&quot; title=&quot;node连接线&quot;&gt;&lt;/a&gt;node连接线&lt;/h2&gt;&lt;p&gt;连接node使用锚点&lt;code&gt;anchor&lt;/code&gt;最为简便，每个node定义了一系列的锚点。最简单的情况是直线。&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; [-&amp;gt;] (critical.west) -- (enter critical.east);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;绘制曲线就复杂的多。我们不列出使用&lt;code&gt;controls&lt;/code&gt;语法的方式，直接讲述&lt;code&gt;to&lt;/code&gt;操作。如果&lt;code&gt;to&lt;/code&gt;操作不带任何参数，它就绘制一条直线&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; [-&amp;gt;] (enter critical) to (critical);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;需要注意的是，上面的node没有指定&lt;code&gt;anchor&lt;/code&gt;。当TikZ遇到一个node需要解析为坐标时，它会根据后面的内容判断应该选取node的哪一个&lt;code&gt;anchor&lt;/code&gt;作为坐标。如果TikZ判断错误，大可重新加上&lt;code&gt;anchor&lt;/code&gt;给出准确位置。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;to&lt;/code&gt;操作有很多参数，这里用到的是&lt;code&gt;in&lt;/code&gt;和&lt;code&gt;out&lt;/code&gt;对。&lt;code&gt;in&lt;/code&gt;和&lt;code&gt;out&lt;/code&gt;接受角度值，分别给出曲线离开初始坐标的角度和曲线到达目标坐标的角度。&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; [-&amp;gt;] (waiting) to [out=180,in=90] (enter critical);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;绘制直线和曲线的代码得到&lt;br&gt;&lt;img src=&quot;upload/tikz_1.png&quot; alt=&quot;to syntax&quot;&gt;&lt;/p&gt;
+&lt;p&gt;更为简单的方式是使用&lt;code&gt;bend left/bend right&lt;/code&gt;选项。&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; [-&amp;gt;] (waiting) to [bend right=45] (enter critical);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bend right&lt;/code&gt;可以想象为，本来有一条连接起始点和终点的直线，把直线的中点向右拉伸$45^{\circ}$。&lt;/p&gt;
+&lt;p&gt;有一个操作比&lt;code&gt;to&lt;/code&gt;操作更好，就是&lt;code&gt;edge&lt;/code&gt;操作。这个操作专门为node添加连接线，它和node一样，不是path的一部分，在path构造完后才会被加入进去。&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[place]&lt;/span&gt;&lt;/span&gt; (waiting) &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[place]&lt;/span&gt;&lt;/span&gt; (critical) [below=of waiting] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[place]&lt;/span&gt;&lt;/span&gt; (semaphore) [below=of critical] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[transition]&lt;/span&gt;&lt;/span&gt; (leave critical) [right=of critical] &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;node&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[transition]&lt;/span&gt;&lt;/span&gt; (enter critical) [left=of critical] &amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    edge [-&amp;gt;] (critical)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    edge [&amp;lt;-,bend left=45] (waiting)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    edge [-&amp;gt;,bend right=45] (semaphore);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上面三条&lt;code&gt;edge&lt;/code&gt;操作每一条都创建了一条新的path，每条path都是&lt;em&gt;enter critical&lt;/em&gt; &lt;code&gt;to&lt;/code&gt;在&lt;code&gt;edge&lt;/code&gt;后面的node。&lt;/p&gt;
+&lt;p&gt;两个很实用的style&lt;br&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [bend angle=45,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   pre/.style=&amp;#123;&amp;lt;-,shorten &amp;lt;=1pt,&amp;gt;=stealth,semithick&amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   post/.style=&amp;#123;-&amp;gt;,shorten &amp;gt;=1pt,&amp;gt;=stealth,semithick&amp;#125;]&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bend angle&lt;/code&gt;一旦被设置，&lt;code&gt;bend left&lt;/code&gt;和&lt;code&gt;bend right&lt;/code&gt;的角度都是&lt;code&gt;bend angle&lt;/code&gt;的值。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;TikZ是什么&quot;&gt;&lt;a href=&quot;#TikZ是什么&quot; class=&quot;headerlink&quot; title=&quot;TikZ是什么&quot;&gt;&lt;/a&gt;TikZ是什么&lt;/h1&gt;&lt;p&gt;PGF/TikZ是用于绘制几何和代数的向量图形的语言，PGF是底层语言，TikZ则是基于PGF的宏高级语言。PGF/TikZ可以在$\LaTeX$、plain $\TeX$、和\ConTEXt中使用. 这里主要关注TikZ在$\LaTeX$中的用法。&lt;/p&gt;
+&lt;h1 id=&quot;TikZ基础&quot;&gt;&lt;a href=&quot;#TikZ基础&quot; class=&quot;headerlink&quot; title=&quot;TikZ基础&quot;&gt;&lt;/a&gt;TikZ基础&lt;/h1&gt;&lt;h2 id=&quot;设置使用环境&quot;&gt;&lt;a href=&quot;#设置使用环境&quot; class=&quot;headerlink&quot; title=&quot;设置使用环境&quot;&gt;&lt;/a&gt;设置使用环境&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;documentclass&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;article&amp;#125;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;comment&quot;&gt;% say&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;usepackage&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikz&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;document&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;We are working on&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;begin&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; (-1.5,0) -- (1.5,0);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; (0,-1.5) -- (0,1.5);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;tikzpicture&amp;#125;&lt;/span&gt;&lt;/span&gt;.&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;document&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;构造直线&quot;&gt;&lt;a href=&quot;#构造直线&quot; class=&quot;headerlink&quot; title=&quot;构造直线&quot;&gt;&lt;/a&gt;构造直线&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; (-1.5,0) -- (1.5,0) -- (0,-1.5) -- (0,1.5);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;不要忘记表达式尾的分号。&lt;/p&gt;
+&lt;h2 id=&quot;构造长方形&quot;&gt;&lt;a href=&quot;#构造长方形&quot; class=&quot;headerlink&quot; title=&quot;构造长方形&quot;&gt;&lt;/a&gt;构造长方形&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;/span&gt; (-0.5,-0.5) rectangle (-1,-1);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;增加一点风格&quot;&gt;&lt;a href=&quot;#增加一点风格&quot; class=&quot;headerlink&quot; title=&quot;增加一点风格&quot;&gt;&lt;/a&gt;增加一点风格&lt;/h2&gt;&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;help lines/.style=&amp;#123;color=blue!50,very thin&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果&lt;code&gt;help lines&lt;/code&gt;定义在全局，则在文档开头使用&lt;code&gt;\tikzset&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;tikzset&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;help lines/.style=very thin&amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;一个风格的定义可以引用另一个风格。如&lt;code&gt;Karl&amp;#39;s grid&lt;/code&gt;引用了上面的&lt;code&gt;help lines&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight tex&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;tikzset&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;&amp;#123;Karl’s grid/.style=&amp;#123;help lines,color=blue!50&amp;#125;&lt;/span&gt;&lt;/span&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;tag&quot;&gt;\&lt;span class=&quot;name&quot;&gt;draw&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;[Karl’s grid]&lt;/span&gt;&lt;/span&gt; (0,0) grid (5,5);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="writing" scheme="https://methor.github.io/categories/writing/"/>
+    
+    
+      <category term="latex" scheme="https://methor.github.io/tags/latex/"/>
+    
+      <category term="plot" scheme="https://methor.github.io/tags/plot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo_install_config</title>
+    <link href="https://methor.github.io/%E5%B7%A5%E5%85%B7/hexo/hexo-install-config/"/>
+    <id>https://methor.github.io/工具/hexo/hexo-install-config/</id>
+    <published>2016-05-22T12:13:53.000Z</published>
+    <updated>2016-07-15T08:23:04.718Z</updated>
+    
+    <content type="html">&lt;p&gt;经过两天折腾，hexo总算像模像样了。中间走了不少弯路，这里记录下来方便后来人。&lt;/p&gt;
+&lt;h1 id=&quot;安装hexo&quot;&gt;&lt;a href=&quot;#安装hexo&quot; class=&quot;headerlink&quot; title=&quot;安装hexo&quot;&gt;&lt;/a&gt;安装hexo&lt;/h1&gt;&lt;p&gt;首先建议安装&lt;em&gt;git&lt;/em&gt;，因为在后面使用主题时会用到。在windows下可以使用&lt;em&gt;git for windows&lt;/em&gt;代替，一路默认即可。&lt;/p&gt;
+&lt;p&gt;接下来下载安装&lt;em&gt;node.js&lt;/em&gt;。从官网下载安装即可。&lt;/p&gt;
+&lt;p&gt;下面进入正题。安装hexo是极为简单的。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;用&lt;em&gt;node.js&lt;/em&gt;的包管理工具&lt;code&gt;npm&lt;/code&gt;安装hexo:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$ npm install -g hexo-cli&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在目标文件夹&lt;code&gt;&amp;lt;folder&amp;gt;&lt;/code&gt;中初始化hexo:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;\$ hexo init &amp;lt;folder&amp;gt;&lt;br&gt;\$ cd &amp;lt;folder&amp;gt;&lt;br&gt;$ npm install&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;配置hexo&quot;&gt;&lt;a href=&quot;#配置hexo&quot; class=&quot;headerlink&quot; title=&quot;配置hexo&quot;&gt;&lt;/a&gt;配置hexo&lt;/h1&gt;&lt;p&gt;安装容易配置难。hexo可配置的内容非常多，建议仔细阅读hexo官方docs，当然也可以按照我的顺序来&lt;del&gt;挂了我可不负责哟&lt;/del&gt;。这里暂不涉及hexo主题，hexo主题放在下一节。以下内容分别为&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;hexo的目录结构&lt;/li&gt;
+&lt;li&gt;作者信息相关配置&lt;/li&gt;
+&lt;li&gt;git部署&lt;/li&gt;
+&lt;li&gt;mathjax支持&lt;/li&gt;
+&lt;li&gt;流程图支持&lt;/li&gt;
+&lt;/ol&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;hexo的目录结构&quot;&gt;&lt;a href=&quot;#hexo的目录结构&quot; class=&quot;headerlink&quot; title=&quot;hexo的目录结构&quot;&gt;&lt;/a&gt;hexo的目录结构&lt;/h2&gt;&lt;p&gt;安装hexo完毕后，&lt;code&gt;&amp;lt;folder&amp;gt;&lt;/code&gt;目录结构是下面这样（B.T.W. 使用&lt;a href=&quot;http://gnuwin32.sourceforge.net/packages/tree.htm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GnuWin32&lt;/a&gt;的&lt;code&gt;tree&lt;/code&gt;程序打印，需修改&lt;code&gt;Path&lt;/code&gt;，linux可直接使用&lt;code&gt;tree&lt;/code&gt;)&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;figcaption&gt;&lt;span&gt;blog&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;|-- _config.yml&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- db.json&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- node_modules&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- package.json&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- scaffolds&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- source&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;`-- themes&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;config-yml&quot;&gt;&lt;a href=&quot;#config-yml&quot; class=&quot;headerlink&quot; title=&quot;config.yml&quot;&gt;&lt;/a&gt;config.yml&lt;/h3&gt;&lt;p&gt;&lt;code&gt;_config.yml&lt;/code&gt;是主要的配置文件，和&lt;code&gt;NexT&lt;/code&gt;主题保持一致我们称之为站点配置文件。顾名思义，修改它将导致全局变更。&lt;/p&gt;
+&lt;h3 id=&quot;package-json&quot;&gt;&lt;a href=&quot;#package-json&quot; class=&quot;headerlink&quot; title=&quot;package.json&quot;&gt;&lt;/a&gt;package.json&lt;/h3&gt;&lt;p&gt;&lt;code&gt;package.json&lt;/code&gt;记录了hexo已安装的模块，下面是我的输出&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;figcaption&gt;&lt;span&gt;package.json&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;quot;name&amp;quot;: &amp;quot;hexo-site&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;quot;version&amp;quot;: &amp;quot;0.0.0&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;quot;private&amp;quot;: true,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;quot;hexo&amp;quot;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;version&amp;quot;: &amp;quot;3.2.0&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;quot;dependencies&amp;quot;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo&amp;quot;: &amp;quot;^3.1.1&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-deployer-git&amp;quot;: &amp;quot;^0.1.0&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-generator-archive&amp;quot;: &amp;quot;^0.1.4&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-generator-category&amp;quot;: &amp;quot;^0.1.3&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-generator-feed&amp;quot;: &amp;quot;^1.1.0&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-generator-index&amp;quot;: &amp;quot;^0.2.0&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-generator-tag&amp;quot;: &amp;quot;^0.2.0&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-inject&amp;quot;: &amp;quot;^1.0.0&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-math&amp;quot;: &amp;quot;^3.0.1&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-renderer-ejs&amp;quot;: &amp;quot;^0.1.1&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-renderer-marked&amp;quot;: &amp;quot;^0.2.9&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-renderer-stylus&amp;quot;: &amp;quot;^0.3.0&amp;quot;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;quot;hexo-server&amp;quot;: &amp;quot;^0.1.3&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;br&gt;其中&lt;code&gt;hexo-generator-feed&lt;/code&gt;、&lt;code&gt;hexo-deployer-git&lt;/code&gt;和&lt;code&gt;hexo-math&lt;/code&gt;是后来安装的插件，&lt;code&gt;hexo-inject&lt;/code&gt;是&lt;code&gt;hexo-math&lt;/code&gt;的依赖项，其余是hexo标准安装自带。&lt;/p&gt;
+&lt;h3 id=&quot;node-modules&quot;&gt;&lt;a href=&quot;#node-modules&quot; class=&quot;headerlink&quot; title=&quot;node_modules&quot;&gt;&lt;/a&gt;node_modules&lt;/h3&gt;&lt;p&gt;&lt;code&gt;node_modules&lt;/code&gt;目录保存hexo模块不需要管它。&lt;/p&gt;
+&lt;h3 id=&quot;source&quot;&gt;&lt;a href=&quot;#source&quot; class=&quot;headerlink&quot; title=&quot;source&quot;&gt;&lt;/a&gt;source&lt;/h3&gt;&lt;p&gt;&lt;code&gt;source&lt;/code&gt;目录保存我的原始文稿，markdown文件一般保存在&lt;code&gt;_posts&lt;/code&gt;目录下。除此之外还可能有&lt;code&gt;_drafts&lt;/code&gt;目录，它和hexo的草稿功能相关，暂时没有使用到。hexo对于&lt;code&gt;source&lt;/code&gt;目录的处理规则是：&lt;em&gt;hexo忽略除&lt;code&gt;_posts&lt;/code&gt;外所有以&lt;code&gt;_&lt;/code&gt;为前缀的文件和文件夹以及隐藏文件，&lt;strong&gt;可渲染文件&lt;/strong&gt;(markdown, html)被处理并保存至&lt;code&gt;public&lt;/code&gt;目录下&lt;/em&gt;。如果想要添加额外忽略规则，可以在&lt;code&gt;_config.yml&lt;/code&gt;文件中搜索到&lt;code&gt;skip_renderer&lt;/code&gt;标签加上想要忽略的文件/文件夹，如我的&lt;code&gt;source&lt;/code&gt;结构为&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;figcaption&gt;&lt;span&gt;source&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;|-- 404.html&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- _posts&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- categories&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- images&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;`-- tags&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;想要忽略&lt;code&gt;404.html&lt;/code&gt;，直接在&lt;code&gt;_config.yml&lt;/code&gt;中写入&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;skip_render: 404.html&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;scaffold&quot;&gt;&lt;a href=&quot;#scaffold&quot; class=&quot;headerlink&quot; title=&quot;scaffold&quot;&gt;&lt;/a&gt;scaffold&lt;/h3&gt;&lt;p&gt;&lt;code&gt;scaffold&lt;/code&gt;文件夹保存了模板文件如&lt;code&gt;post.md&lt;/code&gt;，它给出post的默认&lt;em&gt;front matter&lt;/em&gt;，hexo会根据它创建新文档。&lt;/p&gt;
+&lt;h3 id=&quot;themes&quot;&gt;&lt;a href=&quot;#themes&quot; class=&quot;headerlink&quot; title=&quot;themes&quot;&gt;&lt;/a&gt;themes&lt;/h3&gt;&lt;p&gt;hexo非常重要的部分，一个theme定义了页面的外观和行为。想使用一个新的主题时，将主题&lt;code&gt;git clone&lt;/code&gt;到&lt;code&gt;themes&lt;/code&gt;文件夹中。我的themes结构如下&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;figcaption&gt;&lt;span&gt;themes&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;|-- chan&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- landscape&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;|-- next&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;`-- yilia&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;接着在&lt;code&gt;_config.yml&lt;/code&gt;中找到&lt;code&gt;theme&lt;/code&gt;标签更改为想要使用的theme名称。一个良好的theme有很多可配置的内容，在下一节会以&lt;code&gt;NexT&lt;/code&gt;为例介绍。&lt;/p&gt;
+&lt;h3 id=&quot;作者信息相关配置&quot;&gt;&lt;a href=&quot;#作者信息相关配置&quot; class=&quot;headerlink&quot; title=&quot;作者信息相关配置&quot;&gt;&lt;/a&gt;作者信息相关配置&lt;/h3&gt;&lt;p&gt;无论选用什么主题，更改哪些设置，作者信息应该是不变的。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;设置&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;title&lt;/td&gt;
+&lt;td&gt;站点的主标题&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;subtitle&lt;/td&gt;
+&lt;td&gt;站点副标题&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;description&lt;/td&gt;
+&lt;td&gt;站点描述，类似格言的样子&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;author&lt;/td&gt;
+&lt;td&gt;你的名字&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;language&lt;/td&gt;
+&lt;td&gt;站点使用的语言，hexo默认使用&lt;a href=&quot;https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;2-lettter ISO-639-1 code&lt;/a&gt;，默认值是&lt;code&gt;en&lt;/code&gt;。theme可能有不同的定义，参考theme的说明文档&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;timezone&lt;/td&gt;
+&lt;td&gt;站点使用的时区。默认使用系统默认时区，可不作改动&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&quot;git部署&quot;&gt;&lt;a href=&quot;#git部署&quot; class=&quot;headerlink&quot; title=&quot;git部署&quot;&gt;&lt;/a&gt;git部署&lt;/h3&gt;&lt;p&gt;想要自动部署到github上的page site（即&lt;em&gt;your_name.github.io&lt;/em&gt;）需要一个hexo插件&lt;code&gt;hexo-deployer-git&lt;/code&gt;。hexo插件的命名法是&lt;em&gt;hexo + &amp;lt;category&amp;gt; + &amp;lt;specific name&amp;gt;&lt;/em&gt;，&lt;code&gt;hexo-deployer-git&lt;/code&gt;表明这一插件和部署相关，具体使用git部署。同样使用&lt;em&gt;node.js&lt;/em&gt;的npm管理器安装&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;npm i hexo-deployer-git --save&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;下面是配置&lt;code&gt;_config.yml&lt;/code&gt;中和部署相关的内容。首先找到&lt;code&gt;deploy&lt;/code&gt;标签，在下面添加三个二级标签（两空格缩进）&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;label&lt;/th&gt;
+&lt;th&gt;description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;type&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;部署类型，这里填git&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;repo&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;page site所在仓库，填写&lt;a href=&quot;https://github.com/*your_name/your_name.github.io*&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/*your_name/your_name.github.io*&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;branch&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;所在分支，如果是user pages填master，project pages填gh-pages（一般默认使用user pages）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;接着配置Url相关内容。下面是四个关联标签&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;label&lt;/th&gt;
+&lt;th&gt;description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;url&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;你的博客url，user pages填&lt;a href=&quot;https://&amp;lt;your_name&amp;gt;.github.io，project&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://&amp;lt;your_name&amp;gt;.github.io，project&lt;/a&gt; pages填http(s)://&amp;lt;your_name&amp;gt;.github.io/&amp;lt;projectname&amp;gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;root&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;由于博客内容一般直接放在github repo的根目录下，所以直接写&lt;code&gt;/&lt;/code&gt;。如果放在&lt;code&gt;folder&lt;/code&gt;下，则改为&lt;code&gt;/folder/&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;permalink&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;hexo产生html的路径名。默认是&lt;code&gt;:year/:month/:day/:title/&lt;/code&gt;，表示html按照编辑日期（由markdown文档的&lt;em&gt;front matter&lt;/em&gt;指定）存放和引用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;permalink_default&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;如果html没有对应的permalink，则按照这一标签的值处理。默认留空，不需要更改&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;permalink中的占位符有以下可选&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;placeholder&lt;/th&gt;
+&lt;th&gt;description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;:year&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;文稿年份，四位数字&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;:month&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;文稿月份，两位数字&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;:day&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;文稿日期，两位数字&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;:title&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;文稿标题&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;:id&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;文稿id&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;:category&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;文稿所属类别，如果没有类别则为&lt;code&gt;default_category&lt;/code&gt;的值&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;:i_month&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;去掉0前缀&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;:i_day&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;去掉0前缀&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;配置好之后，首先保险起见&lt;code&gt;hexo clean&lt;/code&gt;一下，然后&lt;code&gt;hexo d --g&lt;/code&gt;（&lt;code&gt;hexo generate&lt;/code&gt;然后再&lt;code&gt;hexo deploy&lt;/code&gt;的简写）。如果没有push权限，请先配置ssh key再试。有可能报&lt;code&gt;directory is not a git repo&lt;/code&gt;类似错误，在&lt;code&gt;.deploy_git&lt;/code&gt;目录下运行&lt;code&gt;git init&lt;/code&gt;即可。&lt;code&gt;.deploy_git&lt;/code&gt;是&lt;code&gt;hexo-deployer-git&lt;/code&gt;根据&lt;code&gt;public&lt;/code&gt;的内容复制出来的用于push的目录。&lt;/p&gt;
+&lt;h3 id=&quot;mathjax支持&quot;&gt;&lt;a href=&quot;#mathjax支持&quot; class=&quot;headerlink&quot; title=&quot;mathjax支持&quot;&gt;&lt;/a&gt;mathjax支持&lt;/h3&gt;&lt;p&gt;我需要hexo排版数学公式和符号，最好能和$\LaTeX$的用法一致。mathjax符合这一要求。使用mathjax本身很简单，只需要在html中插入几段javascript即可。实际上很多主题也是采取类似方式，参考&lt;a href=&quot;http://lukang.me/2014/mathjax-for-hexo.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;常规方法一节&lt;/a&gt;。如&lt;a href=&quot;http://lukang.me/2014/mathjax-for-hexo.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;进阶版一节&lt;/a&gt;所说，另外很多主题通过一个&lt;code&gt;mathjax&lt;/code&gt;标签的布尔值动态加载mathjax，速度会更快。然而这两种方法都有一些缺陷&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;下划线会被看成斜体&lt;/li&gt;
+&lt;li&gt;带有很多特殊符号的命令&lt;a href=&quot;http://catx.me/2014/03/09/hexo-mathjax-plugin/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;会被markdown parser吃掉&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果采用&lt;code&gt;inline mathjax&lt;/code&gt;，下划线只能通过反斜线转义。而一个很大的问题是，&lt;code&gt;mathjax environment&lt;/code&gt;即类似$\LaTeX$的环境如果全部转义工作量会很大。有一个很好的使用mathjax的工具插件&lt;code&gt;hexo-math&lt;/code&gt;，它定义了mathjax tag能够包裹一大段mathjax代码使之不受markdown parser干扰。安装方法同样是使用&lt;code&gt;npm&lt;/code&gt;安装，安装完毕后在&lt;code&gt;_config.yml&lt;/code&gt;中配置。如果使用的主题提供&lt;code&gt;mathjax&lt;/code&gt;标签可以设为&lt;code&gt;false&lt;/code&gt;禁用。注意查看github上的主页，&lt;code&gt;hexo-math&lt;/code&gt;的用法经过若干次改动，最新的用法可能和这里的记载不同。mathjax tag的用法实例&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;% math %&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;\begin&amp;#123;align*&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-\sum_i&amp;#123;P_i\log_2\frac&amp;#123;P_i&amp;#125;&amp;#123;Q_i&amp;#125;&amp;#125; =&amp;amp; \sum_i&amp;#123;P_i\log_2\frac&amp;#123;Q_i&amp;#125;&amp;#123;P_i&amp;#125;&amp;#125; \\&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;\le&amp;amp; \log_2\sum_i&amp;#123;P_i\frac&amp;#123;Q_i&amp;#125;&amp;#123;P_i&amp;#125;&amp;#125; \tag&amp;#123;Jensen&amp;apos;s Inequality&amp;#125; \\&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;=&amp;amp; \log_2\sum_i&amp;#123;Q_i&amp;#125; \\&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;=&amp;amp; 0&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;\end&amp;#123;align*&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;% endmath %&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;span&gt;$$\begin{align*}
+-\sum_i{P_i\log_2\frac{P_i}{Q_i}} =&amp;amp; \sum_i{P_i\log_2\frac{Q_i}{P_i}} \\
+\le&amp;amp; \log_2\sum_i{P_i\frac{Q_i}{P_i}} \tag{Jensen&amp;apos;s Inequality} \\
+=&amp;amp; \log_2\sum_i{Q_i} \\
+=&amp;amp; 0
+\end{align*}$$&lt;/span&gt;&lt;!-- Has MathJax --&gt;
+&lt;h3 id=&quot;流程图支持&quot;&gt;&lt;a href=&quot;#流程图支持&quot; class=&quot;headerlink&quot; title=&quot;流程图支持&quot;&gt;&lt;/a&gt;流程图支持&lt;/h3&gt;&lt;p&gt;作为一个码农，经常需要画图表达自己的构想，框图是必要的，能够产生uml图就更好了。hexo社区一款插件解决了这一需求，&lt;code&gt;hexo-tag-plantuml&lt;/code&gt;基于&lt;a href=&quot;http://plantuml.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;plantuml&lt;/a&gt;开发，能够简单地在markdown中插入uml图。安装配置不多说了，还是&lt;code&gt;npm&lt;/code&gt;加上&lt;code&gt;_config.yml&lt;/code&gt;。最后一遍强调一下，配置前查阅github的readme文档。&lt;/p&gt;
+&lt;p&gt;uml图示例&lt;/p&gt;
+&lt;img src=&quot;http://www.plantuml.com/plantuml/svg/DSn13a0m48NXlLCyUxr05uGL6tSeXZRA95KHjpSfDZEJV7y606hlHb9bmuD6Izupv2nW-O89X9lFAkiv4e9RR0JFIAaCHElszNZLqvmmlTFl-WDfbIe_wM0sBCoJg17D7m00&quot;&gt;
+&lt;h1 id=&quot;选用主题&quot;&gt;&lt;a href=&quot;#选用主题&quot; class=&quot;headerlink&quot; title=&quot;选用主题&quot;&gt;&lt;/a&gt;选用主题&lt;/h1&gt;&lt;h1 id=&quot;丰富你的页面&quot;&gt;&lt;a href=&quot;#丰富你的页面&quot; class=&quot;headerlink&quot; title=&quot;丰富你的页面&quot;&gt;&lt;/a&gt;丰富你的页面&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/wzpan/hexo-tag-bootstrap&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各种颜色标签、小图标等等&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/Gisonrg/hexo-github-card&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github提交卡片&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/m80126colin/hexo-tag-owl&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各类视频&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;经过两天折腾，hexo总算像模像样了。中间走了不少弯路，这里记录下来方便后来人。&lt;/p&gt;
+&lt;h1 id=&quot;安装hexo&quot;&gt;&lt;a href=&quot;#安装hexo&quot; class=&quot;headerlink&quot; title=&quot;安装hexo&quot;&gt;&lt;/a&gt;安装hexo&lt;/h1&gt;&lt;p&gt;首先建议安装&lt;em&gt;git&lt;/em&gt;，因为在后面使用主题时会用到。在windows下可以使用&lt;em&gt;git for windows&lt;/em&gt;代替，一路默认即可。&lt;/p&gt;
+&lt;p&gt;接下来下载安装&lt;em&gt;node.js&lt;/em&gt;。从官网下载安装即可。&lt;/p&gt;
+&lt;p&gt;下面进入正题。安装hexo是极为简单的。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;用&lt;em&gt;node.js&lt;/em&gt;的包管理工具&lt;code&gt;npm&lt;/code&gt;安装hexo:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$ npm install -g hexo-cli&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在目标文件夹&lt;code&gt;&amp;lt;folder&amp;gt;&lt;/code&gt;中初始化hexo:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;\$ hexo init &amp;lt;folder&amp;gt;&lt;br&gt;\$ cd &amp;lt;folder&amp;gt;&lt;br&gt;$ npm install&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;配置hexo&quot;&gt;&lt;a href=&quot;#配置hexo&quot; class=&quot;headerlink&quot; title=&quot;配置hexo&quot;&gt;&lt;/a&gt;配置hexo&lt;/h1&gt;&lt;p&gt;安装容易配置难。hexo可配置的内容非常多，建议仔细阅读hexo官方docs，当然也可以按照我的顺序来&lt;del&gt;挂了我可不负责哟&lt;/del&gt;。这里暂不涉及hexo主题，hexo主题放在下一节。以下内容分别为&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;hexo的目录结构&lt;/li&gt;
+&lt;li&gt;作者信息相关配置&lt;/li&gt;
+&lt;li&gt;git部署&lt;/li&gt;
+&lt;li&gt;mathjax支持&lt;/li&gt;
+&lt;li&gt;流程图支持&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+      <category term="工具" scheme="https://methor.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="hexo" scheme="https://methor.github.io/categories/%E5%B7%A5%E5%85%B7/hexo/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>jensen_inequality</title>
+    <link href="https://methor.github.io/Mathmatics/PRML/jensen-inequality/"/>
+    <id>https://methor.github.io/Mathmatics/PRML/jensen-inequality/</id>
+    <published>2016-05-20T08:39:25.000Z</published>
+    <updated>2016-07-15T08:23:04.734Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;凸函数与凹函数&quot;&gt;&lt;a href=&quot;#凸函数与凹函数&quot; class=&quot;headerlink&quot; title=&quot;凸函数与凹函数&quot;&gt;&lt;/a&gt;凸函数与凹函数&lt;/h2&gt;&lt;p&gt;凸函数&lt;code&gt;convex function&lt;/code&gt;形象地说两头往上翘，中间往下沉。凹函数&lt;code&gt;concave function&lt;/code&gt;恰好相反，两头往下沉，中间往上翘。下图是一个凸函数&lt;br&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/ConvexFunction.svg/400px-ConvexFunction.svg.png&quot; alt=&quot;convex function&quot;&gt;&lt;/p&gt;
+&lt;p&gt;凸函数的定义在某些国内教材中和Wiki中的含义不一，注意区分。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;凸函数的性质&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$$\forall 0 \le t \le 1, tf(x_1) + (1-t)f(x_2) \ge f(tx_1 + (1-t)x_2)$$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这也是凸函数的定义。他是后面要提到的&lt;code&gt;Jensen&amp;#39;s Inequality&lt;/code&gt;的一个形式(&lt;em&gt;form&lt;/em&gt;)。&lt;/p&gt;
+&lt;h2 id=&quot;Jensen’s-Inequality&quot;&gt;&lt;a href=&quot;#Jensen’s-Inequality&quot; class=&quot;headerlink&quot; title=&quot;Jensen’s Inequality&quot;&gt;&lt;/a&gt;Jensen’s Inequality&lt;/h2&gt;&lt;p&gt;在概率论的语境下，若$\varphi$为凸函数，$X$是离散随机变量，&lt;em&gt;Jensen’s Inequality&lt;/em&gt;的形式变为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$$ E[\varphi(X)] \ge \varphi(E[X]) $$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可以用上图直观解释。割线&lt;code&gt;secant line&lt;/code&gt;上的点对应$E[\varphi(X)]$，图像&lt;code&gt;graph&lt;/code&gt;上的点对应$\varphi(E[X])$。前者先应用$\varphi$后求期望（不在$\varphi$上），后者先求期望_$tx_1+(1-t)x&lt;em&gt;2$&lt;/em&gt;再应用$\varphi$（还是在$\varphi$上）。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Jensen’s Inequality&lt;/em&gt;的好处在于把$\varphi$提取出来，对于$E[\varphi(X)]$难以计算的情况行之有效。这里给出一个应用实例。&lt;/p&gt;
+&lt;h2 id=&quot;KL-Divergence&quot;&gt;&lt;a href=&quot;#KL-Divergence&quot; class=&quot;headerlink&quot; title=&quot;KL-Divergence&quot;&gt;&lt;/a&gt;KL-Divergence&lt;/h2&gt;&lt;p&gt;&lt;em&gt;KL散度&lt;/em&gt;&lt;code&gt;Kullback–Leibler divergence&lt;/code&gt;是定义在两个随机变量$P$和$Q$上的距离&lt;code&gt;measurement of distance&lt;/code&gt;，形式为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$$ D_{KL}(P||Q) = \sum_i{P_i\log_2\frac{P_i}{Q_i}}$$&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;他不是一个度量&lt;code&gt;metrics&lt;/code&gt;，因为它&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[ ] 自反， $D_{KL}(P||Q) = 0 \iff P=Q$&lt;/li&gt;
+&lt;li&gt;[ ] 非负， $\forall P,Q, D_{KL}(P||Q) \ge 0$&lt;/li&gt;
+&lt;li&gt;[x] 对称， $D_{KL}(P||Q) = D_{KL}(Q||P)$&lt;/li&gt;
+&lt;li&gt;[x] 三角不等式， $D_{KL}(P||Q) + D_{KL}(Q||R) \ge D_{KL}(P||R)$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中非负的性质证明需要用到&lt;em&gt;Jensen’s Inequality&lt;/em&gt;。&lt;/p&gt;
+&lt;span&gt;$$\begin{align*}
+-\sum_i{P_i\log_2\frac{P_i}{Q_i}} =&amp;amp; \sum_i{P_i\log_2\frac{Q_i}{P_i}} \\
+\le&amp;amp; \log_2\sum_i{P_i\frac{Q_i}{P_i}} \tag{Jensen&amp;apos;s Inequality} \\
+=&amp;amp; \log_2\sum_i{Q_i} \\
+=&amp;amp; 0
+\end{align*}$$&lt;/span&gt;&lt;!-- Has MathJax --&gt;
+&lt;p&gt;上面使用了&lt;em&gt;Jensen’s Inequality&lt;/em&gt;。因为$\varphi=\log_2(x)$是凹函数所以是小于而不是大于。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;凸函数与凹函数&quot;&gt;&lt;a href=&quot;#凸函数与凹函数&quot; class=&quot;headerlink&quot; title=&quot;凸函数与凹函数&quot;&gt;&lt;/a&gt;凸函数与凹函数&lt;/h2&gt;&lt;p&gt;凸函数&lt;code&gt;convex function&lt;/code&gt;形象地说两头往上翘，中间往下沉。凹函数&lt;code&gt;concave function&lt;/code&gt;恰好相反，两头往下沉，中间往上翘。下图是一个凸函数&lt;br&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/ConvexFunction.svg/400px-ConvexFunction.svg.png&quot; alt=&quot;convex function&quot;&gt;&lt;/p&gt;
+&lt;p&gt;凸函数的定义在某些国内教材中和Wiki中的含义不一，注意区分。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Mathmatics" scheme="https://methor.github.io/categories/Mathmatics/"/>
+    
+      <category term="PRML" scheme="https://methor.github.io/categories/Mathmatics/PRML/"/>
+    
+    
+      <category term="Inequality" scheme="https://methor.github.io/tags/Inequality/"/>
+    
+      <category term="Metrics" scheme="https://methor.github.io/tags/Metrics/"/>
+    
+      <category term="Expectation" scheme="https://methor.github.io/tags/Expectation/"/>
+    
+  </entry>
+  
+</feed>

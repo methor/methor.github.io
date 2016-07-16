@@ -1,0 +1,808 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="latex,plot," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Mathmatics & Programming" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="TikZ是什么PGF/TikZ是用于绘制几何和代数的向量图形的语言，PGF是底层语言，TikZ则是基于PGF的宏高级语言。PGF/TikZ可以在$\LaTeX$、plain $\TeX$、和\ConTEXt中使用. 这里主要关注TikZ在$\LaTeX$中的用法。
+TikZ基础设置使用环境123456789\documentclass&amp;#123;article&amp;#125; % say\usepac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TikZ">
+<meta property="og:url" content="https://methor.github.io/writing/tikz/index.html">
+<meta property="og:site_name" content="Mathmatics & Programming">
+<meta property="og:description" content="TikZ是什么PGF/TikZ是用于绘制几何和代数的向量图形的语言，PGF是底层语言，TikZ则是基于PGF的宏高级语言。PGF/TikZ可以在$\LaTeX$、plain $\TeX$、和\ConTEXt中使用. 这里主要关注TikZ在$\LaTeX$中的用法。
+TikZ基础设置使用环境123456789\documentclass&amp;#123;article&amp;#125; % say\usepac">
+<meta property="og:image" content="https://methor.github.io/upload/tikz_1.png">
+<meta property="og:updated_time" content="2016-07-15T08:44:47.625Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TikZ">
+<meta name="twitter:description" content="TikZ是什么PGF/TikZ是用于绘制几何和代数的向量图形的语言，PGF是底层语言，TikZ则是基于PGF的宏高级语言。PGF/TikZ可以在$\LaTeX$、plain $\TeX$、和\ConTEXt中使用. 这里主要关注TikZ在$\LaTeX$中的用法。
+TikZ基础设置使用环境123456789\documentclass&amp;#123;article&amp;#125; % say\usepac">
+<meta name="twitter:image" content="https://methor.github.io/upload/tikz_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> TikZ | Mathmatics & Programming </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f8f1562c48fd2b6809ba415542e6543e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Mathmatics & Programming</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'uBQWg_G-qQzEL9N5p6cD','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                TikZ
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-25T19:57:00+08:00" content="2016-05-25">
+              2016-05-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/writing/" itemprop="url" rel="index">
+                    <span itemprop="name">writing</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/writing/tikz/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="writing/tikz/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="TikZ是什么"><a href="#TikZ是什么" class="headerlink" title="TikZ是什么"></a>TikZ是什么</h1><p>PGF/TikZ是用于绘制几何和代数的向量图形的语言，PGF是底层语言，TikZ则是基于PGF的宏高级语言。PGF/TikZ可以在$\LaTeX$、plain $\TeX$、和\ConTEXt中使用. 这里主要关注TikZ在$\LaTeX$中的用法。</p>
+<h1 id="TikZ基础"><a href="#TikZ基础" class="headerlink" title="TikZ基础"></a>TikZ基础</h1><h2 id="设置使用环境"><a href="#设置使用环境" class="headerlink" title="设置使用环境"></a>设置使用环境</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">documentclass</span><span class="string">&#123;article&#125;</span></span> <span class="comment">% say</span></div><div class="line"><span class="tag">\<span class="name">usepackage</span><span class="string">&#123;tikz&#125;</span></span></div><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;document&#125;</span></span></div><div class="line">We are working on</div><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line">  <span class="tag">\<span class="name">draw</span></span> (-1.5,0) -- (1.5,0);</div><div class="line">  <span class="tag">\<span class="name">draw</span></span> (0,-1.5) -- (0,1.5);</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;tikzpicture&#125;</span></span>.</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;document&#125;</span></span></div></pre></td></tr></table></figure>
+<h2 id="构造直线"><a href="#构造直线" class="headerlink" title="构造直线"></a>构造直线</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">draw</span></span> (-1.5,0) -- (1.5,0) -- (0,-1.5) -- (0,1.5);</div></pre></td></tr></table></figure>
+<p>不要忘记表达式尾的分号。</p>
+<h2 id="构造长方形"><a href="#构造长方形" class="headerlink" title="构造长方形"></a>构造长方形</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">draw</span></span> (-0.5,-0.5) rectangle (-1,-1);</div></pre></td></tr></table></figure>
+<h2 id="增加一点风格"><a href="#增加一点风格" class="headerlink" title="增加一点风格"></a>增加一点风格</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">help lines/.style=&#123;color=blue!50,very thin&#125;</div></pre></td></tr></table></figure>
+<p>如果<code>help lines</code>定义在全局，则在文档开头使用<code>\tikzset</code></p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">tikzset</span><span class="string">&#123;help lines/.style=very thin&#125;</span></span></div></pre></td></tr></table></figure>
+<p>一个风格的定义可以引用另一个风格。如<code>Karl&#39;s grid</code>引用了上面的<code>help lines</code></p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">tikzset</span><span class="string">&#123;Karl’s grid/.style=&#123;help lines,color=blue!50&#125;</span></span>&#125;</div><div class="line">...</div><div class="line">  <span class="tag">\<span class="name">draw</span><span class="string">[Karl’s grid]</span></span> (0,0) grid (5,5);</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>这也同时提示我们风格的用法类似<strong>\draw</strong>[<em>style</em>]。如果定义局部（在环境内部）的风格，则像下面这样</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line">[Karl’s grid/.style =&#123;help lines,color=#1!50&#125;,</div><div class="line">Karl’s grid/.default=blue]</div><div class="line">  <span class="tag">\<span class="name">draw</span><span class="string">[Karl’s grid]</span></span> (0,0) grid (1.5,2);</div><div class="line">  <span class="tag">\<span class="name">draw</span><span class="string">[Karl’s grid=red]</span></span> (2,0) grid (3.5,2);</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;tikzpicture&#125;</span></span></div></pre></td></tr></table></figure>
+<p>定义在<code>tikzpicture</code>的可选参数中。上面也提示我们可以为风格设置默认值，想要替换默认值只需要给风格赋一个新值。</p>
+<h2 id="绘制选项"><a href="#绘制选项" class="headerlink" title="绘制选项"></a>绘制选项</h2><p>线条的粗细有以下一些值</p>
+<blockquote>
+<p>ultra thin, very thin, thin, semithick, thick, very thick, ultra thick</p>
+</blockquote>
+<p><code>thin</code>是正常粗细，它和$\TeX$的<code>\hrule</code>的粗细相同。</p>
+<p>线条的样式有以下一些值</p>
+<blockquote>
+<p>loosely dashed, dashed, densely dashed<br>loosely dotted, dotted, densely dotted</p>
+</blockquote>
+<p>含义一看便知。</p>
+<p>若要为线条尾部增加箭头，可以为<strong>\draw</strong>添加<strong>-&gt;</strong>选项。若为线条头部增加箭头，改为<strong>&lt;-</strong>。若首尾均增加箭头，则是<strong>&lt;-&gt;</strong>。</p>
+<h1 id="TikZ中的node"><a href="#TikZ中的node" class="headerlink" title="TikZ中的node"></a>TikZ中的node</h1><p>TikZ中的<code>node</code>可以插入文字标签，更重要的是可以方便地构造几何图形。转换图、流程图等等都可以用<code>node</code>实现。</p>
+<h2 id="node和at"><a href="#node和at" class="headerlink" title="\node和at"></a>\node和at</h2><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line">  <span class="tag">\<span class="name">node</span></span> at ( 0,2) [circle,draw] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> at ( 0,1) [circle,draw] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> at ( 0,0) [circle,draw] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> at ( 1,1) [rectangle,draw] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> at (-1,1) [rectangle,draw] &#123;&#125;;</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;tikzpicture&#125;</span></span></div></pre></td></tr></table></figure>
+<p>这种写法使用了<code>\node</code>命令和<code>at</code>标记，简化了原始写法。行尾的<code>{}</code>用于插入文字，为空表示不插入任何文字。可选参数中，<code>circle</code>给出了环绕文字（尽管为空）的形状，<code>draw</code>选项引起绘制环绕形状的动作。</p>
+<p>事实上，<code>\node</code>命令是<code>\path node</code>的简写。更原始的版本是这样<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line"><span class="tag">\<span class="name">path</span></span> node at ( 0,2) [shape=circle,draw] &#123;&#125;</div><div class="line">	  node at ( 0,1) [shape=circle,draw] &#123;&#125;</div><div class="line">	  node at ( 0,0) [shape=circle,draw] &#123;&#125;</div><div class="line">	  node at ( 1,1) [shape=rectangle,draw] &#123;&#125;</div><div class="line">	  node at (-1,1) [shape=rectangle,draw] &#123;&#125;;</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;tikzpicture&#125;</span></span></div></pre></td></tr></table></figure></p>
+<p>最原始的版本没有使用<code>at</code>标记，含义并不直观，所以不再列出。</p>
+<h2 id="node的尺寸"><a href="#node的尺寸" class="headerlink" title="node的尺寸"></a>node的尺寸</h2><p>上面绘制出的node尺寸非常小，因为我们没有设定尺寸参数。node默认使用<code>inner sep</code>的值自动为node中的文字增加环绕空白，而默认的<code>inner sep</code>是很小的。可以手动修改<code>inner sep</code>的值<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line">[inner sep=2mm,</div><div class="line">place/.style=&#123;circle,draw=blue!50,fill=blue!20,thick&#125;,</div><div class="line">transition/.style=&#123;rectangle,draw=black!50,fill=black!20,thick&#125;]</div><div class="line">  <span class="tag">\<span class="name">node</span></span> at ( 0,2) [place] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> at ( 0,1) [place] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> at ( 0,0) [place] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> at ( 1,1) [transition] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> at (-1,1) [transition] &#123;&#125;;</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;tikzpicture&#125;</span></span></div></pre></td></tr></table></figure></p>
+<p>但是更好的做法是使用<code>minimum size</code>选项。它指定了node的<em>最小</em>尺寸：无论内部文字多么小（甚至没有），node都能达到这一最小尺寸。同时将<code>inner sep</code>设为<code>0pt</code>，这样能在<code>minimum size</code>较小的时候不至于错误地包含<code>inner sep</code>增加的空间。</p>
+<h2 id="node命名"><a href="#node命名" class="headerlink" title="node命名"></a>node命名</h2><p>为了后续引用定义好的node（比如在node间绘制连接线），可以为node命名，以后用名字引用node。方便的做法是将名字放置在圆括号内部<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">% ... set up styles</span></div><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line">  <span class="tag">\<span class="name">node</span></span> (waiting 1) at ( 0,2) [place] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> (critical 1) at ( 0,1) [place] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> (semaphore) at ( 0,0) [place] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> (leave critical) at ( 1,1) [transition] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> (enter critical) at (-1,1) [transition] &#123;&#125;;</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;tikzpicture&#125;</span></span></div></pre></td></tr></table></figure></p>
+<p>node的语法很宽松，名字、at标识符、可选参数的顺序不做要求。</p>
+<h2 id="使用相对位置"><a href="#使用相对位置" class="headerlink" title="使用相对位置"></a>使用相对位置</h2><p><em>fixed positioning</em>弊端很大，不直观而且不灵活，<em>relative positioning</em>使用起来更方便。在TikZ中使用相对位置需要载入<code>positioning</code>库。于是使用相对位置改写上面的例子<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[place]</span></span> (waiting) &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[place]</span></span> (critical) [below=of waiting] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[place]</span></span> (semaphore) [below=of critical] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[transition]</span></span> (leave critical) [right=of critical] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[transition]</span></span> (enter critical) [left=of critical] &#123;&#125;;</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;tikzpicture&#125;</span></span></div></pre></td></tr></table></figure></p>
+<p>当类似<code>below</code>的选项后面紧跟<code>of</code>，TikZ就会启用相对位置。<strong>相对距离</strong>则使用<code>node distance</code>选项。</p>
+<h2 id="为node增加文字标签"><a href="#为node增加文字标签" class="headerlink" title="为node增加文字标签"></a>为node增加文字标签</h2><p>想要在node周围增加文字标签，有两种方法</p>
+<ol>
+<li><p>直接使用node，利用node的<code>anchor</code>属性</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[place]</span></span> (waiting) &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[place]</span></span> (critical) [below=of waiting] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[place]</span></span> (semaphore) [below=of critical] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[transition]</span></span> (leave critical) [right=of critical] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[transition]</span></span> (enter critical) [left=of critical] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span></span> [red,above] at (semaphore.north) &#123;<span class="formula">$s<span class="tag">\<span class="name">le</span></span> 3$</span>&#125;;</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;tikzpicture&#125;</span></span></div></pre></td></tr></table></figure>
+</li>
+<li><p>使用<code>label</code>选项</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">tikz</span></span></div><div class="line">  <span class="tag">\<span class="name">node</span></span> [circle,draw,label=60:<span class="formula">$60^<span class="tag">\<span class="name">circ</span></span>$</span>,label=below:<span class="formula">$-90^<span class="tag">\<span class="name">circ</span></span>$</span>] &#123;my circle&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>像上面这样，可以增加多个标签。</p>
+<h2 id="node连接线"><a href="#node连接线" class="headerlink" title="node连接线"></a>node连接线</h2><p>连接node使用锚点<code>anchor</code>最为简便，每个node定义了一系列的锚点。最简单的情况是直线。<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">draw</span></span> [-&gt;] (critical.west) -- (enter critical.east);</div></pre></td></tr></table></figure></p>
+<p>绘制曲线就复杂的多。我们不列出使用<code>controls</code>语法的方式，直接讲述<code>to</code>操作。如果<code>to</code>操作不带任何参数，它就绘制一条直线<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">draw</span></span> [-&gt;] (enter critical) to (critical);</div></pre></td></tr></table></figure></p>
+<p>需要注意的是，上面的node没有指定<code>anchor</code>。当TikZ遇到一个node需要解析为坐标时，它会根据后面的内容判断应该选取node的哪一个<code>anchor</code>作为坐标。如果TikZ判断错误，大可重新加上<code>anchor</code>给出准确位置。</p>
+<p><code>to</code>操作有很多参数，这里用到的是<code>in</code>和<code>out</code>对。<code>in</code>和<code>out</code>接受角度值，分别给出曲线离开初始坐标的角度和曲线到达目标坐标的角度。<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">draw</span></span> [-&gt;] (waiting) to [out=180,in=90] (enter critical);</div></pre></td></tr></table></figure></p>
+<p>绘制直线和曲线的代码得到<br><img src="upload/tikz_1.png" alt="to syntax"></p>
+<p>更为简单的方式是使用<code>bend left/bend right</code>选项。<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">draw</span></span> [-&gt;] (waiting) to [bend right=45] (enter critical);</div></pre></td></tr></table></figure></p>
+<p><code>bend right</code>可以想象为，本来有一条连接起始点和终点的直线，把直线的中点向右拉伸$45^{\circ}$。</p>
+<p>有一个操作比<code>to</code>操作更好，就是<code>edge</code>操作。这个操作专门为node添加连接线，它和node一样，不是path的一部分，在path构造完后才会被加入进去。<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[place]</span></span> (waiting) &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[place]</span></span> (critical) [below=of waiting] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[place]</span></span> (semaphore) [below=of critical] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[transition]</span></span> (leave critical) [right=of critical] &#123;&#125;;</div><div class="line">  <span class="tag">\<span class="name">node</span><span class="string">[transition]</span></span> (enter critical) [left=of critical] &#123;&#125;</div><div class="line">    edge [-&gt;] (critical)</div><div class="line">    edge [&lt;-,bend left=45] (waiting)</div><div class="line">    edge [-&gt;,bend right=45] (semaphore);</div><div class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;tikzpicture&#125;</span></span></div></pre></td></tr></table></figure></p>
+<p>上面三条<code>edge</code>操作每一条都创建了一条新的path，每条path都是<em>enter critical</em> <code>to</code>在<code>edge</code>后面的node。</p>
+<p>两个很实用的style<br><figure class="highlight tex"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;tikzpicture&#125;</span></span></div><div class="line">  [bend angle=45,</div><div class="line">   pre/.style=&#123;&lt;-,shorten &lt;=1pt,&gt;=stealth,semithick&#125;,</div><div class="line">   post/.style=&#123;-&gt;,shorten &gt;=1pt,&gt;=stealth,semithick&#125;]</div></pre></td></tr></table></figure></p>
+<p><code>bend angle</code>一旦被设置，<code>bend left</code>和<code>bend right</code>的角度都是<code>bend angle</code>的值。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/latex/" rel="tag">#latex</a>
+          
+            <a href="/tags/plot/" rel="tag">#plot</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/工具/hexo/hexo-install-config/" rel="next" title="hexo_install_config">
+                <i class="fa fa-chevron-left"></i> hexo_install_config
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Distributed-System/Cassandra初探/" rel="prev" title="Cassandra初探">
+                Cassandra初探 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="writing/tikz/"
+           data-title="TikZ" data-url="https://methor.github.io/writing/tikz/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar_1.jpg"
+               alt="N.C.Yi" />
+          <p class="site-author-name" itemprop="name">N.C.Yi</p>
+          <p class="site-description motion-element" itemprop="description">程序员的学习之路</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/methor" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/methor" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/ncyi" target="_blank" title="zhihu">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TikZ是什么"><span class="nav-number">1.</span> <span class="nav-text">TikZ是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TikZ基础"><span class="nav-number">2.</span> <span class="nav-text">TikZ基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置使用环境"><span class="nav-number">2.1.</span> <span class="nav-text">设置使用环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造直线"><span class="nav-number">2.2.</span> <span class="nav-text">构造直线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造长方形"><span class="nav-number">2.3.</span> <span class="nav-text">构造长方形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加一点风格"><span class="nav-number">2.4.</span> <span class="nav-text">增加一点风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制选项"><span class="nav-number">2.5.</span> <span class="nav-text">绘制选项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TikZ中的node"><span class="nav-number">3.</span> <span class="nav-text">TikZ中的node</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#node和at"><span class="nav-number">3.1.</span> <span class="nav-text">\node和at</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node的尺寸"><span class="nav-number">3.2.</span> <span class="nav-text">node的尺寸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node命名"><span class="nav-number">3.3.</span> <span class="nav-text">node命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用相对位置"><span class="nav-number">3.4.</span> <span class="nav-text">使用相对位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为node增加文字标签"><span class="nav-number">3.5.</span> <span class="nav-text">为node增加文字标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node连接线"><span class="nav-number">3.6.</span> <span class="nav-text">node连接线</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">N.C.Yi</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ncyi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
