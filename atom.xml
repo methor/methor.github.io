@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://methor.github.io/"/>
-  <updated>2016-08-28T01:03:53.301Z</updated>
+  <updated>2017-03-01T10:21:01.003Z</updated>
   <id>https://methor.github.io/</id>
   
   <author>
@@ -16,32 +16,187 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>浪B语录</title>
-    <link href="https://methor.github.io/uncategorized/%E6%B5%AAB%E8%AF%AD%E5%BD%95/"/>
-    <id>https://methor.github.io/uncategorized/浪B语录/</id>
-    <published>2016-08-27T03:20:00.000Z</published>
-    <updated>2016-08-28T01:03:53.301Z</updated>
+    <title>问题集锦</title>
+    <link href="https://methor.github.io/uncategorized/%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6/"/>
+    <id>https://methor.github.io/uncategorized/问题集锦/</id>
+    <published>2016-11-21T12:53:36.000Z</published>
+    <updated>2017-03-01T10:21:01.003Z</updated>
     
-    <content type="html">&lt;p&gt;划船不用桨，全靠浪&lt;/p&gt;
-&lt;p&gt;米缸来淘耗子 — 便宜他了&lt;/p&gt;
-&lt;p&gt;老鼠煮菜 — 没事找事&lt;/p&gt;
-&lt;p&gt;耗子走进猫窝 — 好大的胆子&lt;/p&gt;
-&lt;p&gt;哑巴张嘴 — 像什么话&lt;/p&gt;
-&lt;p&gt;鲤鱼长翅膀，公鸡水中游 — 没可能的事&lt;/p&gt;
+    <content type="html">&lt;h3 id=&quot;“Single-ampersand-used-with-wrong-catcode”-error-using-tikz-matrix-in-beamer&quot;&gt;&lt;a href=&quot;#“Single-ampersand-used-with-wrong-catcode”-error-using-tikz-matrix-in-beamer&quot; class=&quot;headerlink&quot; title=&quot;“Single ampersand used with wrong catcode” error using tikz matrix in beamer&quot;&gt;&lt;/a&gt;“Single ampersand used with wrong catcode” error using tikz matrix in beamer&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://tex.stackexchange.com/questions/15093/single-ampersand-used-with-wrong-catcode-error-using-tikz-matrix-in-beamer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ampersand replacement | fragile&lt;/a&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;划船不用桨，全靠浪&lt;/p&gt;
-&lt;p&gt;米缸来淘耗子 — 便宜他了&lt;/p&gt;
-&lt;p&gt;老鼠煮菜 — 没事找事&lt;/p&gt;
-&lt;p&gt;耗子走进猫窝 — 好大的胆子&lt;/p&gt;
-&lt;p&gt;哑巴张嘴 — 像什么话&lt;/p&gt;
-&lt;p&gt;鲤鱼长翅膀，公鸡水中游 — 没可能的事&lt;/p&gt;
-
+      &lt;h3 id=&quot;“Single-ampersand-used-with-wrong-catcode”-error-using-tikz-matrix-in-beamer&quot;&gt;&lt;a href=&quot;#“Single-ampersand-used-with-wrong-catcode”-e
     
     </summary>
     
+    
+  </entry>
+  
+  <entry>
+    <title>Beamer</title>
+    <link href="https://methor.github.io/Latex/Presentation/Beamer/Beamer/"/>
+    <id>https://methor.github.io/Latex/Presentation/Beamer/Beamer/</id>
+    <published>2016-11-18T09:02:00.000Z</published>
+    <updated>2017-03-01T10:21:00.996Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;Simple-Overlay&quot;&gt;&lt;a href=&quot;#Simple-Overlay&quot; class=&quot;headerlink&quot; title=&quot;Simple Overlay&quot;&gt;&lt;/a&gt;Simple Overlay&lt;/h2&gt;&lt;p&gt;Use &lt;code&gt;\pause&lt;/code&gt; command.&lt;/p&gt;
+&lt;h2 id=&quot;Overlay-Specification&quot;&gt;&lt;a href=&quot;#Overlay-Specification&quot; class=&quot;headerlink&quot; title=&quot;Overlay Specification&quot;&gt;&lt;/a&gt;Overlay Specification&lt;/h2&gt;&lt;p&gt;&lt;code&gt;\somecommand&amp;lt;overlay specification&amp;gt;[optional argument]{arguments}&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;overlay specification&lt;/code&gt; = 1-3 (range), 5 (number), -3 (same as 1-3), 1- (from 1 on), …&lt;/p&gt;
+&lt;h2 id=&quot;Commands-with-Overlay-Specifications&quot;&gt;&lt;a href=&quot;#Commands-with-Overlay-Specifications&quot; class=&quot;headerlink&quot; title=&quot;Commands with Overlay Specifications&quot;&gt;&lt;/a&gt;Commands with Overlay Specifications&lt;/h2&gt;&lt;p&gt;if &lt;code&gt;&amp;lt;o.s.&amp;gt;&lt;/code&gt; appears twice, it can be put at either place.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;text&amp;gt;&lt;/code&gt; can even be a command, like &lt;code&gt;\draw (0,0) -- (1,0);&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;only&amp;lt;o.s.&amp;gt;{text}&amp;lt;o.s.&amp;gt;&lt;/code&gt; insert the text only in specified slides, for other slides, it takes up no space (throw text away).&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;item&amp;lt;o.s.&amp;gt;{text}&amp;lt;o.s.&amp;gt;&lt;/code&gt; show the text in a list environment in the specified slides.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;alt&amp;lt;o.s.&amp;gt;{default text}{alternative text}&amp;lt;o.s.&amp;gt;&lt;/code&gt; display the &lt;em&gt;default text&lt;/em&gt; in specified slides, otherwise show the &lt;em&gt;alternative text&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;temporal&amp;lt;o.s.&amp;gt;{before slide text}{default text}{after text}&lt;/code&gt; alternate between three different texts.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;visible&amp;lt;o.s.&amp;gt;{text}&lt;/code&gt; only shown in specified slides, otherwise it doesn’t show up completely.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;uncover&amp;lt;o.s.&amp;gt;{text}&lt;/code&gt; compared to &lt;code&gt;visible&lt;/code&gt;, in unspecified slides the text can be transparent.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;onslide&lt;/code&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Simple-Overlay&quot;&gt;&lt;a href=&quot;#Simple-Overlay&quot; class=&quot;headerlink&quot; title=&quot;Simple Overlay&quot;&gt;&lt;/a&gt;Simple Overlay&lt;/h2&gt;&lt;p&gt;Use &lt;code&gt;\pause&lt;/code
+    
+    </summary>
+    
+      <category term="Latex" scheme="https://methor.github.io/categories/Latex/"/>
+    
+      <category term="Presentation" scheme="https://methor.github.io/categories/Latex/Presentation/"/>
+    
+      <category term="Beamer" scheme="https://methor.github.io/categories/Latex/Presentation/Beamer/"/>
+    
+    
+      <category term="Beamer" scheme="https://methor.github.io/tags/Beamer/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vim 配置</title>
+    <link href="https://methor.github.io/Vim/vim-%E9%85%8D%E7%BD%AE/"/>
+    <id>https://methor.github.io/Vim/vim-配置/</id>
+    <published>2016-11-04T09:53:00.000Z</published>
+    <updated>2016-11-14T09:49:00.137Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;在-MinGW-中改变字体&quot;&gt;&lt;a href=&quot;#在-MinGW-中改变字体&quot; class=&quot;headerlink&quot; title=&quot;在 MinGW 中改变字体&quot;&gt;&lt;/a&gt;在 MinGW 中改变字体&lt;/h3&gt;&lt;p&gt;在 &lt;a href=&quot;http://stackoverflow.com/questions/447824/how-do-you-configure-msyss-default-size-color-and-font&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;how-do-you-configure-msyss-default-size-color-and-font&lt;/a&gt; 中提到，最简单的方法就是在窗口上边框点击右键配置相关参数。 我使用的是 &lt;a href=&quot;https://mintty.github.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;mintty&lt;/a&gt;，支持这样的配置方法。更复杂的是 RXVT，可能需要更改相应配置文件。&lt;/p&gt;
+&lt;h3 id=&quot;Statusline-的配置&quot;&gt;&lt;a href=&quot;#Statusline-的配置&quot; class=&quot;headerlink&quot; title=&quot;Statusline 的配置&quot;&gt;&lt;/a&gt;Statusline 的配置&lt;/h3&gt;&lt;p&gt;statusline 即 vim 窗口的状态栏，在命令栏的上方编辑区的下方。可以通过一行配置&lt;/p&gt;
+&lt;figure class=&quot;highlight vim&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline=%t[%&amp;#123;&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(&amp;amp;fenc)?&amp;amp;fenc:&lt;span class=&quot;string&quot;&gt;&#39;none&#39;&lt;/span&gt;&amp;#125;,%&amp;#123;&amp;amp;ff&amp;#125;]%h%&lt;span class=&quot;keyword&quot;&gt;m&lt;/span&gt;%r%&lt;span class=&quot;keyword&quot;&gt;y&lt;/span&gt;%=%&lt;span class=&quot;keyword&quot;&gt;c&lt;/span&gt;,%&lt;span class=&quot;keyword&quot;&gt;l&lt;/span&gt;/%L\ %&lt;span class=&quot;keyword&quot;&gt;P&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意，不能出现空格，如果想加入字面上的空格需要用反斜线转义。&lt;/p&gt;
+&lt;p&gt;也可以用多行带注释的方式&lt;/p&gt;
+&lt;figure class=&quot;highlight vim&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline=%t       &lt;span class=&quot;comment&quot;&gt;&quot;tail of the filename&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=[%&amp;#123;&lt;span class=&quot;built_in&quot;&gt;strlen&lt;/span&gt;(&amp;amp;fenc)?&amp;amp;fenc:&lt;span class=&quot;string&quot;&gt;&#39;none&#39;&lt;/span&gt;&amp;#125;, &lt;span class=&quot;comment&quot;&gt;&quot;file encoding&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=%&amp;#123;&amp;amp;ff&amp;#125;] &lt;span class=&quot;comment&quot;&gt;&quot;file format&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=%h      &lt;span class=&quot;comment&quot;&gt;&quot;help file flag&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=%&lt;span class=&quot;keyword&quot;&gt;m&lt;/span&gt;      &lt;span class=&quot;comment&quot;&gt;&quot;modified flag&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=%r      &lt;span class=&quot;comment&quot;&gt;&quot;read only flag&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=%&lt;span class=&quot;keyword&quot;&gt;y&lt;/span&gt;      &lt;span class=&quot;comment&quot;&gt;&quot;filetype&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=%=      &lt;span class=&quot;comment&quot;&gt;&quot;left/right separator&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=%&lt;span class=&quot;keyword&quot;&gt;c&lt;/span&gt;,     &lt;span class=&quot;comment&quot;&gt;&quot;cursor column&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=%&lt;span class=&quot;keyword&quot;&gt;l&lt;/span&gt;/%L   &lt;span class=&quot;comment&quot;&gt;&quot;cursor line/total lines&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt; statusline+=\ %&lt;span class=&quot;keyword&quot;&gt;P&lt;/span&gt;    &lt;span class=&quot;comment&quot;&gt;&quot;percent through file&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;  
+&lt;p&gt;&lt;code&gt;%t&lt;/code&gt; 和 &lt;code&gt;%f&lt;/code&gt; 有区别，可以观察在 &lt;code&gt;%f&lt;/code&gt; 下把焦点移到另一个 buffer 后发生什么变化。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;making-statuslines-that-own&lt;/a&gt; 详细说明了配置要点，包括 &lt;code&gt;%{...}&lt;/code&gt; 自定义内容，&lt;code&gt;%-0{minwid}.{maxwid}{item}&lt;/code&gt; 的完全语法，&lt;code&gt;%(...%)&lt;/code&gt; 将多个东西括起来等等。&lt;/p&gt;
+&lt;h3 id=&quot;Vimdiff&quot;&gt;&lt;a href=&quot;#Vimdiff&quot; class=&quot;headerlink&quot; title=&quot;Vimdiff&quot;&gt;&lt;/a&gt;Vimdiff&lt;/h3&gt;&lt;h4 id=&quot;E97&quot;&gt;&lt;a href=&quot;#E97&quot; class=&quot;headerlink&quot; title=&quot;E97&quot;&gt;&lt;/a&gt;E97&lt;/h4&gt;&lt;p&gt;vimdiff ( 包括 git mergetool、fugutive 的 :Gdiff ) 都需要可执行文件 diff 的支持。在 MinGW 中如果出现 E97，可参考 &lt;a href=&quot;http://www.xbatu.com/node/19&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;解决 E97&lt;/a&gt; 中的做法，简而言之使用 &lt;code&gt;ln -s /usr/bin/diff /usr/share/vim/vim74diff&lt;/code&gt; 将 vim74diff 指向系统 diff。&lt;/p&gt;
+&lt;p&gt;diff 输出内容的解读可以参考 &lt;a href=&quot;http://www.ruanyifeng.com/blog/2012/08/how_to_read_diff.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;how to read diff&lt;/a&gt;。&lt;/p&gt;
+&lt;h3 id=&quot;Git-Merge&quot;&gt;&lt;a href=&quot;#Git-Merge&quot; class=&quot;headerlink&quot; title=&quot;Git Merge&quot;&gt;&lt;/a&gt;Git Merge&lt;/h3&gt;&lt;p&gt;回顾 git remote 和 git fetch 等命令可以看 &lt;a href=&quot;http://www.ruanyifeng.com/blog/2014/06/git_remote.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;git 远程操作&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;如果在本地修改了一些配置文件，想更新软件主要版本，可以使用 git stash 来完成 merge 过程：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;git stash&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git fetch&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git merge origin/master&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git stash pop&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;这时候会有冲突，使用 git mergetool 或者在 vim 中使用 fugitive 插件的 &lt;code&gt;:Gdiff&lt;/code&gt; 均可。关于 fugitive 的使用可以观看 &lt;a href=&quot;http://vimcasts.org/episodes/fugitive-vim-resolving-merge-conflicts-with-vimdiff/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;fugitive.vim&lt;/a&gt;视频介绍，git mergetool 的使用可以查看 &lt;a href=&quot;http://blog.binchen.org/posts/use-vimdiff-to-resolve-git-merge-conflicts-effectively.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;vimdiff&lt;/a&gt;的说明。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;在-MinGW-中改变字体&quot;&gt;&lt;a href=&quot;#在-MinGW-中改变字体&quot; class=&quot;headerlink&quot; title=&quot;在 MinGW 中改变字体&quot;&gt;&lt;/a&gt;在 MinGW 中改变字体&lt;/h3&gt;&lt;p&gt;在 &lt;a href=&quot;http://stackove
+    
+    </summary>
+    
+      <category term="Vim" scheme="https://methor.github.io/categories/Vim/"/>
+    
+    
+      <category term="vim" scheme="https://methor.github.io/tags/vim/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>May 的用法</title>
+    <link href="https://methor.github.io/English-Learning/May-%E7%9A%84%E7%94%A8%E6%B3%95/"/>
+    <id>https://methor.github.io/English-Learning/May-的用法/</id>
+    <published>2016-11-03T14:14:00.000Z</published>
+    <updated>2016-11-03T15:17:28.074Z</updated>
+    
+    <content type="html">&lt;p&gt;may 这个词在英语中很常见，而它的意思往往比较微妙。很多情况下忽略 may 的意义尽管不影响理解整句话含义，却可能疑惑它 的用法。&lt;/p&gt;
+&lt;h2 id=&quot;may-表示可能性&quot;&gt;&lt;a href=&quot;#may-表示可能性&quot; class=&quot;headerlink&quot; title=&quot;may 表示可能性&quot;&gt;&lt;/a&gt;may 表示可能性&lt;/h2&gt;&lt;p&gt;1.&lt;/p&gt;
+&lt;p&gt;某事可能发生或可能是真的&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;There may be an easier way of solving the problem.&lt;/p&gt;
+&lt;p&gt;I may not be able to play on Saturday.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;2.&lt;/p&gt;
+&lt;p&gt;(FORMAL) 做某件事的可能性&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The bill may be paid by cheque or by credit card.&lt;/p&gt;
+&lt;p&gt;The total may be calculated by two different methods.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;教科书和论文等正式文体中常用到这一用法，如 &lt;em&gt;For example, we may write ♡∉A.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;may-表示允许&quot;&gt;&lt;a href=&quot;#may-表示允许&quot; class=&quot;headerlink&quot; title=&quot;may 表示允许&quot;&gt;&lt;/a&gt;may 表示允许&lt;/h2&gt;&lt;p&gt;1.&lt;/p&gt;
+&lt;p&gt;礼貌询问是否可以做某事&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;May I come in now?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;2.&lt;/p&gt;
+&lt;p&gt;(FORMAL) 说明允许某事&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Visitors may use the swimming pool between 5.30 and 7.30 pm.&lt;/p&gt;
+&lt;p&gt;You may take a short break now.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;may-表示为达到某个目的&quot;&gt;&lt;a href=&quot;#may-表示为达到某个目的&quot; class=&quot;headerlink&quot; title=&quot;may 表示为达到某个目的&quot;&gt;&lt;/a&gt;may 表示为达到某个目的&lt;/h2&gt;&lt;p&gt;(FORMAL) 某人为达到某个目的做某事&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The dried fruit may be used through the winter.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;may 这个词在英语中很常见，而它的意思往往比较微妙。很多情况下忽略 may 的意义尽管不影响理解整句话含义，却可能疑惑它 的用法。&lt;/p&gt;
+&lt;h2 id=&quot;may-表示可能性&quot;&gt;&lt;a href=&quot;#may-表示可能性&quot; class=&quot;headerlink&quot; title=&quot;
+    
+    </summary>
+    
+      <category term="English Learning" scheme="https://methor.github.io/categories/English-Learning/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>C++</title>
+    <link href="https://methor.github.io/Programming-Language/Specification/C/"/>
+    <id>https://methor.github.io/Programming-Language/Specification/C/</id>
+    <published>2016-11-01T06:22:00.000Z</published>
+    <updated>2016-11-14T09:49:00.121Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;Temporary&quot;&gt;&lt;a href=&quot;#Temporary&quot; class=&quot;headerlink&quot; title=&quot;Temporary&quot;&gt;&lt;/a&gt;Temporary&lt;/h2&gt;&lt;span class=&quot;badge&quot;&gt;text&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;Returning from a function that returns &lt;span class=&quot;label label-by&quot;&gt;primary&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Passing an argument in a function &lt;span class=&quot;label label-by&quot;&gt;primary&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;T object = &lt;em&gt;other&lt;/em&gt; while &lt;em&gt;other&lt;/em&gt; is passed in one of T’s constructor&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;&lt;tr&gt;&lt;td bgcolor=&quot;orange&quot;&gt;背景色是：orange&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;h2 id=&quot;Initialization&quot;&gt;&lt;a href=&quot;#Initialization&quot; class=&quot;headerlink&quot; title=&quot;Initialization&quot;&gt;&lt;/a&gt;Initialization&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Copy initialization&lt;/li&gt;
+&lt;li&gt;Direct initialization&lt;/li&gt;
+&lt;li&gt;Value initialization&lt;/li&gt;
+&lt;li&gt;List initialization&lt;/li&gt;
+&lt;li&gt;Aggregate initialization&lt;/li&gt;
+&lt;li&gt;Reference initialization&lt;/li&gt;
+&lt;li&gt;Default initialization&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Temporary&quot;&gt;&lt;a href=&quot;#Temporary&quot; class=&quot;headerlink&quot; title=&quot;Temporary&quot;&gt;&lt;/a&gt;Temporary&lt;/h2&gt;&lt;span class=&quot;badge&quot;&gt;text&lt;/span&gt;
+&lt;ul&gt;
+&lt;li&gt;Retu
+    
+    </summary>
+    
+      <category term="Programming Language" scheme="https://methor.github.io/categories/Programming-Language/"/>
+    
+      <category term="Specification" scheme="https://methor.github.io/categories/Programming-Language/Specification/"/>
+    
+    
+      <category term="C++" scheme="https://methor.github.io/tags/C/"/>
     
   </entry>
   
@@ -249,9 +404,15 @@
     <link href="https://methor.github.io/%E5%B7%A5%E5%85%B7/hexo/hexo-install-config/"/>
     <id>https://methor.github.io/工具/hexo/hexo-install-config/</id>
     <published>2016-05-22T12:13:53.000Z</published>
-    <updated>2016-07-15T08:23:04.718Z</updated>
+    <updated>2016-11-14T09:49:00.130Z</updated>
     
-    <content type="html">&lt;p&gt;经过两天折腾，hexo总算像模像样了。中间走了不少弯路，这里记录下来方便后来人。&lt;/p&gt;
+    <content type="html">&lt;p&gt;title: hexo_install_config&lt;br&gt;date: 2016-05-22 20:13:53&lt;br&gt;categories:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;工具&lt;/li&gt;
+&lt;li&gt;hexo&lt;br&gt;tags:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;经过两天折腾，hexo总算像模像样了。中间走了不少弯路，这里记录下来方便后来人。&lt;/p&gt;
 &lt;h1 id=&quot;安装hexo&quot;&gt;&lt;a href=&quot;#安装hexo&quot; class=&quot;headerlink&quot; title=&quot;安装hexo&quot;&gt;&lt;/a&gt;安装hexo&lt;/h1&gt;&lt;p&gt;首先建议安装&lt;em&gt;git&lt;/em&gt;，因为在后面使用主题时会用到。在windows下可以使用&lt;em&gt;git for windows&lt;/em&gt;代替，一路默认即可。&lt;/p&gt;
 &lt;p&gt;接下来下载安装&lt;em&gt;node.js&lt;/em&gt;。从官网下载安装即可。&lt;/p&gt;
 &lt;p&gt;下面进入正题。安装hexo是极为简单的。&lt;/p&gt;
@@ -431,12 +592,18 @@
 &lt;h3 id=&quot;流程图支持&quot;&gt;&lt;a href=&quot;#流程图支持&quot; class=&quot;headerlink&quot; title=&quot;流程图支持&quot;&gt;&lt;/a&gt;流程图支持&lt;/h3&gt;&lt;p&gt;作为一个码农，经常需要画图表达自己的构想，框图是必要的，能够产生uml图就更好了。hexo社区一款插件解决了这一需求，&lt;code&gt;hexo-tag-plantuml&lt;/code&gt;基于&lt;a href=&quot;http://plantuml.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;plantuml&lt;/a&gt;开发，能够简单地在markdown中插入uml图。安装配置不多说了，还是&lt;code&gt;npm&lt;/code&gt;加上&lt;code&gt;_config.yml&lt;/code&gt;。最后一遍强调一下，配置前查阅github的readme文档。&lt;/p&gt;
 &lt;p&gt;uml图示例&lt;/p&gt;
 &lt;img src=&quot;http://www.plantuml.com/plantuml/svg/DSn13a0m48NXlLCyUxr05uGL6tSeXZRA95KHjpSfDZEJV7y606hlHb9bmuD6Izupv2nW-O89X9lFAkiv4e9RR0JFIAaCHElszNZLqvmmlTFl-WDfbIe_wM0sBCoJg17D7m00&quot;&gt;
-&lt;h1 id=&quot;选用主题&quot;&gt;&lt;a href=&quot;#选用主题&quot; class=&quot;headerlink&quot; title=&quot;选用主题&quot;&gt;&lt;/a&gt;选用主题&lt;/h1&gt;&lt;h1 id=&quot;丰富你的页面&quot;&gt;&lt;a href=&quot;#丰富你的页面&quot; class=&quot;headerlink&quot; title=&quot;丰富你的页面&quot;&gt;&lt;/a&gt;丰富你的页面&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/wzpan/hexo-tag-bootstrap&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各种颜色标签、小图标等等&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/Gisonrg/hexo-github-card&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github提交卡片&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/m80126colin/hexo-tag-owl&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各类视频&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;选用主题&quot;&gt;&lt;a href=&quot;#选用主题&quot; class=&quot;headerlink&quot; title=&quot;选用主题&quot;&gt;&lt;/a&gt;选用主题&lt;/h1&gt;&lt;h1 id=&quot;丰富你的页面&quot;&gt;&lt;a href=&quot;#丰富你的页面&quot; class=&quot;headerlink&quot; title=&quot;丰富你的页面&quot;&gt;&lt;/a&gt;丰富你的页面&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/wzpan/hexo-tag-bootstrap&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各种颜色标签、小图标等等&lt;/a&gt; (限定 freemind 主题)&lt;br&gt;&lt;a href=&quot;https://github.com/Gisonrg/hexo-github-card&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github提交卡片&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/m80126colin/hexo-tag-owl&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各类视频&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/search?utf8=%E2%9C%93&amp;amp;q=hexo+tag&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;各种 tag&lt;/a&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;p&gt;经过两天折腾，hexo总算像模像样了。中间走了不少弯路，这里记录下来方便后来人。&lt;/p&gt;
+      &lt;p&gt;title: hexo_install_config&lt;br&gt;date: 2016-05-22 20:13:53&lt;br&gt;categories:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;工具&lt;/li&gt;
+&lt;li&gt;hexo&lt;br&gt;tags:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;经过两天折腾，hexo总算像模像样了。中间走了不少弯路，这里记录下来方便后来人。&lt;/p&gt;
 &lt;h1 id=&quot;安装hexo&quot;&gt;&lt;a href=&quot;#安装hexo&quot; class=&quot;headerlink&quot; title=&quot;安装hexo&quot;&gt;&lt;/a&gt;安装hexo&lt;/h1&gt;&lt;p&gt;首先建议安装&lt;em&gt;git&lt;/em&gt;，因为在后面使用主题时会用到。在windows下可以使用&lt;em&gt;git for windows&lt;/em&gt;代替，一路默认即可。&lt;/p&gt;
 &lt;p&gt;接下来下载安装&lt;em&gt;node.js&lt;/em&gt;。从官网下载安装即可。&lt;/p&gt;
 &lt;p&gt;下面进入正题。安装hexo是极为简单的。&lt;/p&gt;
