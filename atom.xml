@@ -108,49 +108,6 @@
   </entry>
   
   <entry>
-    <title>C++</title>
-    <link href="https://methor.github.io/Programming-Language/Specification/C/"/>
-    <id>https://methor.github.io/Programming-Language/Specification/C/</id>
-    <published>2016-11-01T06:22:00.000Z</published>
-    <updated>2016-11-14T09:49:00.121Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;Temporary&quot;&gt;&lt;a href=&quot;#Temporary&quot; class=&quot;headerlink&quot; title=&quot;Temporary&quot;&gt;&lt;/a&gt;Temporary&lt;/h2&gt;&lt;span class=&quot;badge&quot;&gt;text&lt;/span&gt;
-&lt;ul&gt;
-&lt;li&gt;Returning from a function that returns &lt;span class=&quot;label label-by&quot;&gt;primary&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;Passing an argument in a function &lt;span class=&quot;label label-by&quot;&gt;primary&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;T object = &lt;em&gt;other&lt;/em&gt; while &lt;em&gt;other&lt;/em&gt; is passed in one of T’s constructor&lt;/li&gt;
-&lt;/ul&gt;
-&lt;table&gt;&lt;tr&gt;&lt;td bgcolor=&quot;orange&quot;&gt;背景色是：orange&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
-&lt;h2 id=&quot;Initialization&quot;&gt;&lt;a href=&quot;#Initialization&quot; class=&quot;headerlink&quot; title=&quot;Initialization&quot;&gt;&lt;/a&gt;Initialization&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;Copy initialization&lt;/li&gt;
-&lt;li&gt;Direct initialization&lt;/li&gt;
-&lt;li&gt;Value initialization&lt;/li&gt;
-&lt;li&gt;List initialization&lt;/li&gt;
-&lt;li&gt;Aggregate initialization&lt;/li&gt;
-&lt;li&gt;Reference initialization&lt;/li&gt;
-&lt;li&gt;Default initialization&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Temporary&quot;&gt;&lt;a href=&quot;#Temporary&quot; class=&quot;headerlink&quot; title=&quot;Temporary&quot;&gt;&lt;/a&gt;Temporary&lt;/h2&gt;&lt;span class=&quot;badge&quot;&gt;text&lt;/span&gt;
-&lt;ul&gt;
-&lt;li&gt;Retu
-    
-    </summary>
-    
-      <category term="Programming Language" scheme="https://methor.github.io/categories/Programming-Language/"/>
-    
-      <category term="Specification" scheme="https://methor.github.io/categories/Programming-Language/Specification/"/>
-    
-    
-      <category term="C++" scheme="https://methor.github.io/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
     <title>arch</title>
     <link href="https://methor.github.io/uncategorized/arch/"/>
     <id>https://methor.github.io/uncategorized/arch/</id>
